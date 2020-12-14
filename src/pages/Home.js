@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { Grid } from 'semantic-ui-react';
 
+import { AuthContext } from '../context/auth';
 import ProjectCard from '../components/ProjectCard';
+import ProjectForm from '../components/ProjectForm';
 
 function Home() {
+    const { user } = useContext(AuthContext)
     const { loading, data: { getProjects: projects } = {} } = useQuery(FETCH_PROJECTS_QUERY);
 
     console.log(projects)
@@ -16,6 +19,11 @@ function Home() {
                 <h1>Recent Projects</h1>
             </Grid.Row>
             <Grid.Row>
+                {user && (
+                    <Grid.Column>
+                        <ProjectForm />
+                    </Grid.Column>
+                )}
             {loading ? ( <h1>Loading Projects...</h1> ) : (
 
                     projects && projects.map(project => (
