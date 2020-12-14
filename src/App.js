@@ -8,6 +8,7 @@ import './App.css';
 import { AuthProvider } from './context/auth';
 import AuthRoute from './utilities/AuthRoute';
 
+
 import MenuBar from './components/MenuBar';
 import Home from './pages/Home';
 import Login from './pages/Login';
