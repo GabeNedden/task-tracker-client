@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 import { Grid } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
 import ProjectCard from '../components/ProjectCard';
 import ProjectForm from '../components/ProjectForm';
+import { FETCH_PROJECTS_QUERY } from '../utilities/graphql';
 
 function Home() {
     const { user } = useContext(AuthContext)
@@ -37,31 +37,5 @@ function Home() {
         </Grid>
     );
 };
-
-const FETCH_PROJECTS_QUERY = gql`
-    {
-        getProjects{
-        id
-        name
-        description
-        createdAt
-        username
-        tasks{
-            id
-            name
-            description
-            createdAt
-            username
-            comments{
-                id
-                body
-                username
-                createdAt
-            }
-            
-        }
-  }
-    }
-`
 
 export default Home;

@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
 import { useForm } from '../utilities/hooks';
+import { FETCH_PROJECTS_QUERY } from '../utilities/graphql';
 
 function ProjectForm(){
 
@@ -13,8 +14,12 @@ function ProjectForm(){
 
     const [createProject, { error }] = useMutation(CREATE_PROJECT_MUTATION, {
         variables: values,
-        update(_, result){
-            console.log(result)
+        update(proxy, result){
+            const data = proxy.readQuery({
+                query: FETCH_PROJECTS_QUERY
+            })
+            data.getProjects = [result.data.createProject, ...data.getProjects];
+            proxy.writeQuery({ query: FETCH_PROJECTS_QUERY, data });
             values.name = '';
         }
     });
@@ -28,10 +33,11 @@ function ProjectForm(){
             <h2>Start a New Project:</h2>
             <Form.Field>
                 <Form.Input
-                    placeholder="Hi"
+                    placeholder="Name your project"
                     name="name"
                     onChange={onChange}
                     value={values.name}
+                    error={error ? true : false}
                     />
                 <Button type="submit" color="yellow">
                     Submit
