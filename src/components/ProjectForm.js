@@ -36,6 +36,7 @@ function ProjectForm(){
     }
 
     return (
+        <>
         <Form onSubmit={onSubmit}>
             <h2>Start a New Project:</h2>
             <Form.Field>
@@ -51,6 +52,14 @@ function ProjectForm(){
                 </Button>
             </Form.Field>
         </Form>
+        {error && (
+            <div className="ui error message" style={{marginBottom: 20}}>
+                <ul className="list">
+                    <li>{error.graphQLErrors[0].message}</li>
+                </ul>
+            </div>
+        )}
+    </>
     )
 }
 

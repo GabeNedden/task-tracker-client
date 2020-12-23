@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Transition } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
 import ProjectCard from '../components/ProjectCard';
@@ -24,13 +24,16 @@ function Home() {
                         <ProjectForm />
                     </Grid.Column>
                 )}
-            {loading ? ( <h1>Loading Projects...</h1> ) : (
-
-                    projects && projects.map(project => (
-                        <Grid.Column key={project.id} style={{ marginBottom: 30 }}>
-                            <ProjectCard project={project}/>
-                        </Grid.Column>
-                    ))
+            {loading ? (
+                <h1>Loading Projects...</h1>
+            ) : (
+                <Transition.Group>
+                    {projects && projects.map(project => (
+                    <Grid.Column key={project.id} style={{ marginBottom: 30 }}>
+                        <ProjectCard project={project}/>
+                    </Grid.Column>
+                ))}
+                </Transition.Group>
             )}
 
             </Grid.Row>
