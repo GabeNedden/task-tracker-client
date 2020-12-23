@@ -23,8 +23,8 @@ function MenuBar() {
             to='/'
           />
           <Menu.Item
-            name='messages'
-            active={activeItem === 'messages'}
+            name='notifications'
+            active={activeItem === 'notifications'}
             onClick={handleItemClick}
           />
           
@@ -51,8 +51,8 @@ function MenuBar() {
             to='/'
           />
           <Menu.Item
-            name='messages'
-            active={activeItem === 'messages'}
+            name='notifications'
+            active={activeItem === 'notifications'}
             onClick={handleItemClick}
           />
           

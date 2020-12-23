@@ -14,15 +14,22 @@ function ProjectForm(){
 
     const [createProject, { error }] = useMutation(CREATE_PROJECT_MUTATION, {
         variables: values,
-        update(proxy, result){
-            const data = proxy.readQuery({
-                query: FETCH_PROJECTS_QUERY
-            })
-            data.getProjects = [result.data.createProject, ...data.getProjects];
-            proxy.writeQuery({ query: FETCH_PROJECTS_QUERY, data });
-            values.name = '';
-        }
-    });
+        update(proxy, result) {
+          const data = proxy.readQuery({
+            query: FETCH_PROJECTS_QUERY,
+          });
+          proxy.writeQuery({
+            query: FETCH_PROJECTS_QUERY,
+            data: {
+              getProjects: [result.data.createProject, ...data.getProjects],
+            },
+          });
+          values.name = "";
+        },
+        onError(err) {
+          return err;
+        },
+      });
 
     function createProjectCallback(){
         createProject();
@@ -52,6 +59,7 @@ const CREATE_PROJECT_MUTATION = gql`
         createProject(name: $name){
             id
             name
+            description
             createdAt
             username
             tasks{
