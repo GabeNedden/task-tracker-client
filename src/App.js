@@ -13,6 +13,7 @@ import MenuBar from './components/MenuBar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ProjectPage from './pages/ProjectPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route exact path='/' component={Home}/>
         <AuthRoute exact path='/login' component={Login}/>
         <AuthRoute exact path='/register' component={Register}/>
+        <Route exact path='/project/:projectId' component={ProjectPage}/>
       </Container>
     </Router>
     </AuthProvider>

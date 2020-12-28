@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Card, Icon, Label, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-function ProjectCard({ project: { name, description, tasks, createdAt, id, username }}){
+import { AuthContext } from '../context/auth';
+
+function ProjectCard({ project: { name, description, tasks, createdAt, id, username }
+  }) {
+
+    const { user } = useContext(AuthContext);
+
 
     return (
         <Card fluid>
     <Image src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png' wrapped ui={false} />
     <Card.Content>
-      <Card.Header>{name}</Card.Header>
-    <Card.Meta as={Link} to={`/projects/${id}`}>{moment(createdAt).fromNow()}</Card.Meta>
+      <Card.Header as={Link} to={`/project/${id}`}>{name}</Card.Header>
+    <Card.Meta as='div'>{moment(createdAt).fromNow()}</Card.Meta>
       <Card.Description>{description}</Card.Description>
+      {user && user.username === username && (
+      <div>This is your project!</div>
+    )}
     </Card.Content>
     <Card.Content extra>
-    <Button as='div' labelPosition='right'>
+    <Button as={Link} to={`/project/${id}`} labelPosition='right'>
       <Button color='yellow'>
         <Icon name='fork' />
         View Tasks
