@@ -16,7 +16,8 @@ function Home() {
     return (
         <Grid centered columns={5}>
             <Grid.Row className="page-title">
-                <h1>Recent Projects</h1>
+                <h1>Projects</h1>
+                {!user && <p>Please register to create projects</p>}
             </Grid.Row>
             <Grid.Row>
                 {user && (
