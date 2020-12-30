@@ -22,11 +22,6 @@ function MenuBar() {
             as={Link}
             to='/'
           />
-          <Menu.Item
-            name='notifications'
-            active={activeItem === 'notifications'}
-            onClick={handleItemClick}
-          />
           
           <Menu.Menu position='right'>
           <Menu.Item
@@ -49,11 +44,6 @@ function MenuBar() {
             onClick={handleItemClick}
             as={Link}
             to='/'
-          />
-          <Menu.Item
-            name='notifications'
-            active={activeItem === 'notifications'}
-            onClick={handleItemClick}
           />
           
           <Menu.Menu position='right'>

@@ -14,7 +14,7 @@ function Home() {
     console.log(projects)
     
     return (
-        <Grid stackable>
+        <Grid stackable centered>
             <Grid.Row className="page-title">
                 <h1>Projects</h1>
                 {!user && <p>Please register to start a project</p>}
