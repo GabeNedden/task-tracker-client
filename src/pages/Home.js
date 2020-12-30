@@ -14,14 +14,14 @@ function Home() {
     console.log(projects)
     
     return (
-        <Grid centered columns={5}>
+        <Grid stackable>
             <Grid.Row className="page-title">
                 <h1>Projects</h1>
                 {!user && <p>Please register to start a project</p>}
             </Grid.Row>
             <Grid.Row>
                 {user && (
-                    <Grid.Column>
+                    <Grid.Column width={3}>
                         <ProjectForm />
                     </Grid.Column>
                 )}
@@ -38,7 +38,7 @@ function Home() {
             ) : (
                 <Transition.Group>
                     {projects && projects.map(project => (
-                    <Grid.Column key={project.id} style={{ marginBottom: 30 }}>
+                    <Grid.Column width={3} key={project.id} style={{ marginBottom: 30 }}>
                         <ProjectCard project={project}/>
                     </Grid.Column>
                 ))}

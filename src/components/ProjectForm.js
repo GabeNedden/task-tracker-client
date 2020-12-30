@@ -36,10 +36,10 @@ function ProjectForm(){
     }
 
     return (
-        <Card fluid>
-    <Image style={{padding: 40}} src='https://cdn.onlinewebfonts.com/svg/img_219298.png' wrapped ui={false} />
+        <Card centered>
+    <Image style={{padding: 60}} src='https://cdn.onlinewebfonts.com/svg/img_219298.png' />
     <Card.Content>
-      <Card.Header centered >Start a new project</Card.Header>
+      <Card.Header>Start a new project</Card.Header>
     </Card.Content>
     <Card.Content >
     <Form onSubmit={onSubmit}>
@@ -57,7 +57,7 @@ function ProjectForm(){
             </Form.Field>
         </Form>
         {error && (
-            <div className="ui error message" style={{marginBottom: 20}}>
+            <div className="ui error message" style={{margin: 20}}>
                 <ul className="list">
                     <li>{error.graphQLErrors[0].message}</li>
                 </ul>

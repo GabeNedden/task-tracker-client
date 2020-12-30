@@ -12,7 +12,7 @@ function ProjectCard({ project: { name, description, tasks, createdAt, id, usern
 
 
     return (
-        <Card fluid>
+        <Card centered>
     <Image src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png' wrapped ui={false} />
     <Card.Content>
       <Card.Header as={Link} to={`/project/${id}`}>{name}</Card.Header>
@@ -34,7 +34,7 @@ function ProjectCard({ project: { name, description, tasks, createdAt, id, usern
     </Button>
     </Card.Content>
   </Card>
-)
+  )
 }
 
 
