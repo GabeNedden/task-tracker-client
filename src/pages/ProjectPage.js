@@ -35,7 +35,7 @@ function ProjectPage(props){
     if(!getProject){
         projectMarkup = <p>Loading Project</p>
     } else {
-        const { name, description, tasks, createdAt } = getProject;
+        const { name, description, username, tasks, createdAt } = getProject;
 
         projectMarkup = (
             <Grid fluid centered columns="12">
@@ -56,7 +56,9 @@ function ProjectPage(props){
                                 <Card.Description>{description}</Card.Description>
                             </Card.Content>
                         </Card>
-                        {user && <Card fluid>
+                        
+                        {user && user.username === username && (
+                        <Card fluid>
                             <Card.Content>
                             <p>Create a Task</p>
                             <Form>
@@ -78,12 +80,14 @@ function ProjectPage(props){
                                 </div>
                             </Form>
                             </Card.Content>
-                        </Card>}
+                        </Card>
+                        )}
+
                         {tasks.map(task => (
                             <Card fluid key={task.id}>
                                 <Card.Content>
                                     <Card.Header>{task.name}</Card.Header>
-                                    <Card.Meta>Test</Card.Meta>
+                                    <Card.Meta>Unassigned Task</Card.Meta>
                                 </Card.Content>
                             </Card>
                         ))}
