@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Card, Form, Image } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -36,9 +36,13 @@ function ProjectForm(){
     }
 
     return (
-        <>
-        <Form onSubmit={onSubmit}>
-            <h2>Start a New Project:</h2>
+        <Card fluid>
+    <Image style={{padding: 40}} src='https://cdn.onlinewebfonts.com/svg/img_219298.png' wrapped ui={false} />
+    <Card.Content>
+      <Card.Header centered >Start a new project</Card.Header>
+    </Card.Content>
+    <Card.Content >
+    <Form onSubmit={onSubmit}>
             <Form.Field>
                 <Form.Input
                     placeholder="Name your project"
@@ -59,7 +63,8 @@ function ProjectForm(){
                 </ul>
             </div>
         )}
-    </>
+    </Card.Content>
+  </Card>
     )
 }
 

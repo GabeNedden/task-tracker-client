@@ -1,4 +1,4 @@
-import React, { useContext, useState} from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Card, Form, Grid, Image } from 'semantic-ui-react';
@@ -8,6 +8,7 @@ import { AuthContext } from '../context/auth';
 function ProjectPage(props){
     const projectId = props.match.params.projectId;
     const { user } = useContext(AuthContext);
+    const taskInputRef = useRef(null);
 
     const [task, setTask] = useState('');
 
@@ -22,6 +23,7 @@ function ProjectPage(props){
     const [createTask] = useMutation(CREATE_TASK_MUTATION, {
         update(){
             setTask('');
+            taskInputRef.current.blur();
         },
         variables: {
             projectId,
@@ -36,7 +38,7 @@ function ProjectPage(props){
         const { name, description, tasks, createdAt } = getProject;
 
         projectMarkup = (
-            <Grid fluid>
+            <Grid fluid centered columns="12">
                 <Grid.Row>
                     <Grid.Column width={2}>
                         <Image
@@ -64,6 +66,7 @@ function ProjectPage(props){
                                             name="task"
                                             value={task}
                                             onChange={event => setTask(event.target.value)}
+                                            ref={taskInputRef}
                                             />
                                     <button className="ui button yellow"
                                             disabled={task.trim() === ''}

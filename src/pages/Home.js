@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid, Transition } from 'semantic-ui-react';
+import { Dimmer, Grid, Image, Loader, Segment, Transition } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
 import ProjectCard from '../components/ProjectCard';
@@ -17,7 +17,7 @@ function Home() {
         <Grid centered columns={5}>
             <Grid.Row className="page-title">
                 <h1>Projects</h1>
-                {!user && <p>Please register to create projects</p>}
+                {!user && <p>Please register to start a project</p>}
             </Grid.Row>
             <Grid.Row>
                 {user && (
@@ -26,7 +26,15 @@ function Home() {
                     </Grid.Column>
                 )}
             {loading ? (
-                <h1>Loading Projects...</h1>
+                <div>
+                <Segment>
+                  <Dimmer inverted active>
+                    <Loader indeterminate>Connecting to Database</Loader>
+                  </Dimmer>
+            
+                  <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+                </Segment>
+              </div>
             ) : (
                 <Transition.Group>
                     {projects && projects.map(project => (
