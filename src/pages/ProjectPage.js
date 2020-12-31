@@ -43,7 +43,7 @@ function ProjectPage(props){
                     <Grid.Column width={2}>
                         <Image
                          src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png'
-                         size='small'
+                         size='medium'
                          float='right'
                          />
 
