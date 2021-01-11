@@ -16,8 +16,12 @@ function Home() {
     return (
         <Grid stackable centered>
             <Grid.Row className="page-title">
-                <h1>Projects</h1>
-                {!user && <p>Please register to start a project</p>}
+                {!user && !loading && (
+                    <>
+                        <h1>Projects</h1>
+                        <p>Please register to start a project</p>
+                    </> 
+                    )}
             </Grid.Row>
             <Grid.Row>
                 {user && (
