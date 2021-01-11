@@ -38,9 +38,9 @@ function ProjectPage(props){
         const { name, description, username, tasks, createdAt } = getProject;
 
         projectMarkup = (
-            <Grid fluid centered columns="12">
+            <Grid columns="12">
                 <Grid.Row>
-                    <Grid.Column width={2}>
+                    <Grid.Column width={4}>
                         <Image
                          src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png'
                          size='medium'
@@ -52,8 +52,10 @@ function ProjectPage(props){
                         <Card fluid>
                             <Card.Content>
                                 <Card.Header>{name}</Card.Header>
-                                <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
+                                <Card.Meta>Project owned by {username}</Card.Meta>
+                                <Card.Meta>Created {moment(createdAt).fromNow()}</Card.Meta>
                                 <Card.Description>{description}</Card.Description>
+                                <div>testing</div>
                             </Card.Content>
                         </Card>
                         
