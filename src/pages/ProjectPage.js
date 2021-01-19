@@ -72,6 +72,7 @@ function ProjectPage(props){
                                     <>
                                     <ToggleButton user={user} project={getProject} />
                                     <Button
+                                        style={{marginTop: 10}}
                                         as="div"
                                         color="orange"
                                         size="mini"
