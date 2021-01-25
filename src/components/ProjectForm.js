@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Form, Image } from 'semantic-ui-react';
+import { Button, Card, Form } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -37,7 +37,6 @@ function ProjectForm(){
 
     return (
         <Card centered>
-    <Image style={{padding: 60}} src='https://cdn.onlinewebfonts.com/svg/img_219298.png' />
     <Card.Content>
       <Card.Header>Start a new project</Card.Header>
     </Card.Content>

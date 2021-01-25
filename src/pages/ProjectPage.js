@@ -1,10 +1,11 @@
 import React, { useContext, useState, useRef } from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Button, Card, Form, Grid, Image } from 'semantic-ui-react';
+import { Button, Card, Form, Grid, Image, Transition } from 'semantic-ui-react';
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import ToggleButton from '../components/ToggleButton';
+import TeamCard from '../components/TeamCard';
 
 function ProjectPage(props){
     const projectId = props.match.params.projectId;
@@ -36,33 +37,25 @@ function ProjectPage(props){
     if(!getProject){
         projectMarkup = <p>Loading Project</p>
     } else {
-        const { name, description, username, tasks, createdAt } = getProject;
+        const { name, description, username, tasks, teammembers, createdAt } = getProject;
 
         projectMarkup = (
-            <Grid columns="12">
+            <Grid>
                 <Grid.Row>
-                    <Grid.Column width={4}>
-                        <Image
-                         src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png'
-                         size='medium'
-                         float='right'
-                         />
 
+                    <Grid.Column width={3}>
+                        <Card>
+                            <Image
+                            src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png'
+                            size='medium'
+                            float='right'
+                            />
+                        </Card>
                     </Grid.Column>
-                    <Grid.Column width={10}>
+
+                    <Grid.Column width={8}>
                         <Card fluid>
                             <Card.Content>
-                                {user && user.username === username && (
-                                        <Button
-                                            as="div"
-                                            color="yellow"
-                                            size="small"
-                                            floated='right'
-                                            onClick={() => console.log("Add Team")}
-                                        >
-                                            Add Team Members
-                                        </Button>
-                                    )}
                                 <Card.Header>{name}</Card.Header>
                                 <Card.Meta>Project owned by {username}{user && user.username === username && " (That's you!)"}</Card.Meta>
                                 <Card.Meta>Created {moment(createdAt).fromNow()}</Card.Meta>
@@ -84,7 +77,6 @@ function ProjectPage(props){
                                 )}
                             </Card.Content>
                         </Card>
-                        
                         {user && user.username === username && (
                         <Card fluid>
                             <Card.Content>
@@ -111,7 +103,6 @@ function ProjectPage(props){
                             </Card.Content>
                         </Card>
                         )}
-
                         {tasks.map(task => (
                             <Card fluid key={task.id}>
                                 <Card.Content>
@@ -128,11 +119,17 @@ function ProjectPage(props){
                                     )}
                                     <Card.Header>{task.name}</Card.Header>
                                     <Card.Meta>Unassigned Task</Card.Meta>
-                                    
                                 </Card.Content>
                             </Card>
                         ))}
                     </Grid.Column>
+
+                    <Transition.Group>
+                        <Grid.Column width={5}>
+                            <TeamCard teammembers={teammembers} />
+                        </Grid.Column>
+                    </Transition.Group>
+                            
                 </Grid.Row>
             </Grid>
         )
@@ -148,6 +145,7 @@ const CREATE_TASK_MUTATION = gql `
                 id
                 name
                 description
+                teammember
                 createdAt
                 username
             }
@@ -163,6 +161,9 @@ const FETCH_PROJECT_QUERY = gql `
             description
             createdAt
             username
+            teammembers{
+                username
+            }
             tasks{
                 id
                 name

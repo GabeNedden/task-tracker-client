@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Card, Icon, Label, Image } from 'semantic-ui-react';
+import { Button, Card, Icon, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
@@ -13,7 +13,6 @@ function ProjectCard({ project: { name, description, tasks, createdAt, id, usern
 
     return (
         <Card centered>
-    <Image src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png' wrapped ui={false} />
     <Card.Content>
       <Card.Header as={Link} to={`/project/${id}`}>{name}</Card.Header>
     <Card.Meta as='div'>{moment(createdAt).fromNow()}</Card.Meta>
@@ -24,7 +23,7 @@ function ProjectCard({ project: { name, description, tasks, createdAt, id, usern
     </Card.Content>
     <Card.Content extra>
     <Button as={Link} to={`/project/${id}`} labelPosition='right'>
-      <Button color='yellow'>
+      <Button size="mini" color='yellow'>
         <Icon name='fork' />
         View Tasks
       </Button>
