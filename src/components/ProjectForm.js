@@ -50,7 +50,7 @@ function ProjectForm(){
                     value={values.name}
                     error={error ? true : false}
                     />
-                <Button type="submit" color="yellow">
+                <Button type="submit" color="grey">
                     Submit
                 </Button>
             </Form.Field>

@@ -23,11 +23,11 @@ function ProjectCard({ project: { name, description, tasks, createdAt, id, usern
     </Card.Content>
     <Card.Content extra>
     <Button as={Link} to={`/project/${id}`} labelPosition='right'>
-      <Button size="mini" color='yellow'>
+      <Button size="mini" color='grey'>
         <Icon name='fork' />
         View Tasks
       </Button>
-      <Label as='a' basic color='yellow' pointing='left'>
+      <Label as='a' basic color='grey' pointing='left'>
         {tasks.length}
       </Label>
     </Button>
