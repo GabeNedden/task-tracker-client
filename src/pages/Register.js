@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Divider, Form, Grid, Segment } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
+import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 
 import { AuthContext } from '../context/auth';
@@ -34,57 +35,72 @@ const Register = (props) => {
     }
 
     return (
-        <div className="form-container">
-            <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
-                <h1 className="centered" >Register</h1>
-                <Form.Input
-                    label="Username"
-                    placeholder="Username"
-                    name="username"
-                    type="text"
-                    value={values.username}
-                    error={errors.username ? true : false}
-                    onChange={onChange}
-                />
-                <Form.Input
-                    label="Email"
-                    placeholder="Email"
-                    name="email"
-                    type="email"
-                    value={values.email}
-                    error={errors.email ? true : false}
-                    onChange={onChange}
-                />
-                <Form.Input
-                    label="Password"
-                    placeholder="Password"
-                    name="password"
-                    type="password"
-                    value={values.password}
-                    error={errors.password ? true : false}
-                    onChange={onChange}
-                />
-                <Form.Input
-                    label="Confirm Password"
-                    placeholder="Confirm Password"
-                    name="confirmPassword"
-                    type="password"
-                    value={values.confirmPassword}
-                    error={errors.confirmPassword ? true : false}
-                    onChange={onChange}
-                />
-                <Button type="submit" primary>Register</Button>
-            </Form>
-            {Object.keys(errors).length > 0 && (
-                <div className="ui error message">
-                <ul className="list">
-                    {Object.values(errors).map(value => (
-                       <li key={value}>{value}</li> 
-                    ))}
-                </ul>
-            </div>
-            )}
-        </div>
+        <Segment placeholder style={{marginTop: 50, height: 380}}>
+            <Grid columns={2} relaxed='very' stackable>
+    
+            <Grid.Column>
+                <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
+                    <Form.Input
+                        label="Username"
+                        placeholder="Username"
+                        name="username"
+                        type="text"
+                        value={values.username}
+                        error={errors.username ? true : false}
+                        onChange={onChange}
+                    />
+                    <Form.Input
+                        label="Email"
+                        placeholder="Email"
+                        name="email"
+                        type="email"
+                        value={values.email}
+                        error={errors.email ? true : false}
+                        onChange={onChange}
+                    />
+                    <Form.Input
+                        label="Password"
+                        placeholder="Password"
+                        name="password"
+                        type="password"
+                        value={values.password}
+                        error={errors.password ? true : false}
+                        onChange={onChange}
+                    />
+                    <Form.Input
+                        label="Confirm Password"
+                        placeholder="Confirm Password"
+                        name="confirmPassword"
+                        type="password"
+                        value={values.confirmPassword}
+                        error={errors.confirmPassword ? true : false}
+                        onChange={onChange}
+                    />
+                    <Button type="submit" primary>Register</Button>
+                </Form>
+                {Object.keys(errors).length > 0 && (
+                    <div className="ui error message">
+                    <ul className="list">
+                        {Object.values(errors).map(value => (
+                        <li key={value}>{value}</li> 
+                        ))}
+                    </ul>
+                </div>
+                )}
+            </Grid.Column>
+
+            <Grid.Column verticalAlign='middle'>
+                <Button
+                    content='Login'
+                    icon='bicycle'
+                    size='big'
+                    as={Link}
+                    to='/login' />
+            </Grid.Column>
+            </Grid>
+
+            <Divider vertical>Or</Divider>
+        </Segment>
     );
 };
 

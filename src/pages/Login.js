@@ -33,7 +33,7 @@ const Login = (props) => {
     };
 
     return (
-        <Segment placeholder>
+        <Segment placeholder style={{marginTop: 50, height: 380}}>
             <Grid columns={2} relaxed='very' stackable>
                 
             <Grid.Column>
