@@ -6,6 +6,7 @@ import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import ToggleButton from '../components/ToggleButton';
 import TeamCard from '../components/TeamCard';
+import ProjectEditor from '../components/ProjectEditor';
 
 function ProjectPage(props){
     const projectId = props.match.params.projectId;
@@ -59,13 +60,14 @@ function ProjectPage(props){
                                 <Card.Header>{name}</Card.Header>
                                 <Card.Meta>Project owned by {username}{user && user.username === username && " (That's you!)"}</Card.Meta>
                                 <Card.Meta>Created {moment(createdAt).fromNow()}</Card.Meta>
-                                <Card.Description>{description}</Card.Description>
+                                <Card.Description floated='left'>{description}</Card.Description>
                                 
                                 {user && user.username === username && (
                                     <>
                                     <ToggleButton user={user} project={getProject} />
                                     <Button
                                         style={{marginTop: 10}}
+                                        floated='right'
                                         as="div"
                                         color="orange"
                                         size="mini"
@@ -91,7 +93,7 @@ function ProjectPage(props){
                                         ref={taskInputRef}
                                     />
                                     <button 
-                                        className="ui button yellow mini"
+                                        className="ui button grey mini"
                                         disabled={task.trim() === ''}
                                         type="submit"
                                         onClick={createTask}
@@ -109,7 +111,7 @@ function ProjectPage(props){
                                     {user && user.username === username && (
                                     <Button
                                         as="div"
-                                        color="yellow"
+                                        color="grey"
                                         size="small"
                                         floated='right'
                                         onClick={() => console.log("complete task")}
@@ -122,6 +124,9 @@ function ProjectPage(props){
                                 </Card.Content>
                             </Card>
                         ))}
+                        {user && user.username === username && (
+                                <ProjectEditor user={user} project={getProject} />
+                            )}
                     </Grid.Column>
 
                     <Transition.Group>
@@ -159,6 +164,8 @@ const FETCH_PROJECT_QUERY = gql `
             id
             name
             description
+            status
+            privacy
             createdAt
             username
             teammembers{

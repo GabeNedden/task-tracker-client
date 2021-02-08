@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 function ToggleButton({ user, project: { id, status } }){
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
 
     useEffect(() => {
         if(user && status === "Open"){
@@ -18,11 +18,11 @@ function ToggleButton({ user, project: { id, status } }){
 
     const completeButton = user &&
         open ? (
-            <Button size="mini" color="yellow" onClick={completeProject}>
+            <Button floated='right' style={{marginTop: 10}} size="mini" color="yellow" onClick={completeProject}>
                 Complete Project
             </Button>
         ) : (
-            <Button size="mini" color="yellow" onClick={completeProject} basic>
+            <Button floated='right' style={{marginTop: 10}} size="mini" color="yellow" onClick={completeProject} basic>
                 Re-Open Project
             </Button>
         )

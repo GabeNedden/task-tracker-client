@@ -10,8 +10,6 @@ import { FETCH_PROJECTS_QUERY } from '../utilities/graphql';
 function Home() {
     const { user } = useContext(AuthContext)
     const { loading, data: { getProjects: projects } = {} } = useQuery(FETCH_PROJECTS_QUERY);
-
-    console.log(projects)
     
     return (
         <Grid stackable centered>
