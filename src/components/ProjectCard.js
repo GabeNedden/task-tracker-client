@@ -1,15 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button, Card, Icon, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import { AuthContext } from '../context/auth';
-
 function ProjectCard({ project: { name, description, tasks, createdAt, id, username }
   }) {
-
-    const { user } = useContext(AuthContext);
-
 
     return (
         <Card centered style={{height: 160}}>
