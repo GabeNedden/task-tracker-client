@@ -36,11 +36,11 @@ function ProjectForm(){
     }
 
     return (
-        <Card centered>
+        <Card centered style={{height: 160}}>
     <Card.Content>
       <Card.Header>Start a new project</Card.Header>
     </Card.Content>
-    <Card.Content >
+    <Card.Content extra>
     <Form onSubmit={onSubmit}>
             <Form.Field>
                 <Form.Input
@@ -50,7 +50,7 @@ function ProjectForm(){
                     value={values.name}
                     error={error ? true : false}
                     />
-                <Button type="submit" color="grey">
+                <Button type="submit" size="tiny" color="grey">
                     Submit
                 </Button>
             </Form.Field>

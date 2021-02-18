@@ -12,14 +12,11 @@ function ProjectCard({ project: { name, description, tasks, createdAt, id, usern
 
 
     return (
-        <Card centered>
+        <Card centered style={{height: 160}}>
     <Card.Content>
       <Card.Header as={Link} to={`/project/${id}`}>{name}</Card.Header>
     <Card.Meta as='div'>{moment(createdAt).fromNow()}</Card.Meta>
       <Card.Description>{description}</Card.Description>
-      {user && user.username === username && (
-      <div>This is your project!</div>
-    )}
     </Card.Content>
     <Card.Content extra>
     <Button as={Link} to={`/project/${id}`} labelPosition='right'>

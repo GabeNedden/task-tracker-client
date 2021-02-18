@@ -44,7 +44,7 @@ function ProjectPage(props){
             <Grid>
                 <Grid.Row>
 
-                    <Grid.Column width={3}>
+                    <Grid.Column width={4}>
                         <Card>
                             <Image
                             src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png'
@@ -52,9 +52,12 @@ function ProjectPage(props){
                             float='right'
                             />
                         </Card>
+                        <Transition.Group>
+                            <TeamCard teammembers={teammembers} />
+                        </Transition.Group>
                     </Grid.Column>
 
-                    <Grid.Column width={8}>
+                    <Grid.Column width={12}>
                         <Card fluid>
                             <Card.Content>
                                 <Card.Header>{name}</Card.Header>
@@ -128,12 +131,6 @@ function ProjectPage(props){
                                 <ProjectEditor user={user} project={getProject} />
                             )}
                     </Grid.Column>
-
-                    <Transition.Group>
-                        <Grid.Column width={5}>
-                            <TeamCard teammembers={teammembers} />
-                        </Grid.Column>
-                    </Transition.Group>
                             
                 </Grid.Row>
             </Grid>
