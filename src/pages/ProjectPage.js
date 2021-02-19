@@ -147,7 +147,6 @@ const CREATE_TASK_MUTATION = gql `
                 id
                 name
                 description
-                teammember
                 createdAt
                 username
             }
