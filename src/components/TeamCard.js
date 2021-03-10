@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Card, Feed, Icon } from 'semantic-ui-react';
+import { Button, Card, Feed, Form, Icon } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
 
@@ -36,6 +36,29 @@ function TeamCard({ teammembers }) {
                         </Feed.Content>
                     </Feed.Event>
                 ))}
+                <Feed.Event>
+                        <Feed.Label>
+                            <img alt={user} src='https://react.semantic-ui.com/images/avatar/small/laura.jpg' />
+                        </Feed.Label>
+                        <Feed.Content>
+                            <Form>
+                                <div>
+                                    <input
+                                        type="text"
+                                        placeholder="New Teammember!"
+                                        name="task"
+                                    />
+                                    <Button circular
+                                        icon="add"
+                                        as="div"
+                                        color="orange"
+                                        type="submit"
+                                    >
+                                    </Button>
+                                </div>
+                            </Form>
+                        </Feed.Content>
+                    </Feed.Event>
             </Feed>
         </Card.Content>
     </Card>

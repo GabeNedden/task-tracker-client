@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Card, Form } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
+
+import { AuthContext } from '../context/auth';
 
 function ProjectEditor(props){
     const initialState = {
@@ -9,6 +11,9 @@ function ProjectEditor(props){
         name: props.project.name,
         description: props.project.description
     }
+
+    const { user } = useContext(AuthContext);
+    const { username } = props.user;
         
     const [values, setValues] = useState(initialState);
     
@@ -32,34 +37,44 @@ function ProjectEditor(props){
 
     return (
         <Card fluid>
-    <Card.Content>
-      <Card.Header>Update your project</Card.Header>
-    </Card.Content>
-    <Card.Content >
-    <Form onSubmit={onSubmit}>
-            <Form.Field>
-                <Form.Input
-                    label="Name"
-                    placeholder="Update proj name"
-                    name="name"
-                    onChange={onChange}
-                    value={values.name}
-                    />
-                <Form.Input
-                    label="Description"
-                    placeholder="Update proj desc"
-                    name="description"
-                    onChange={onChange}
-                    value={values.description}
-                    />
-                <Button type="submit" color="grey">
-                    Submit
-                </Button>
-            </Form.Field>
-        </Form>
-    </Card.Content>
-  </Card>
-    )
+            <Card.Content >
+            <Form onSubmit={onSubmit}>
+                    <Form.Field>
+                        <Form.Input
+                            transparent 
+                            size="big"
+                            placeholder="Project Name"
+                            name="name"
+                            onChange={onChange}
+                            value={values.name}
+                            />
+                        <Form.Input
+                            transparent
+                            placeholder="Project Description"
+                            name="description"
+                            onChange={onChange}
+                            value={values.description}
+                            />
+                        <Button floated="left" size="mini" type="submit" color="grey">
+                            Update
+                        </Button>
+                        {user && user.username === username && (
+                                    <Button
+                                        style={{marginTop: 10}}
+                                        floated='right'
+                                        as="div"
+                                        color="orange"
+                                        size="mini"
+                                        onClick={() => console.log("Archive")}
+                                    >
+                                            Archive Project
+                                    </Button>
+                                )}
+                    </Form.Field>
+                </Form>
+            </Card.Content>
+        </Card>
+            )
 }
 
 const UPDATE_PROJECT_MUTATION = gql`

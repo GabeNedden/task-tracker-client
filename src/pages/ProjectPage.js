@@ -1,19 +1,20 @@
 import React, { useContext, useState, useRef } from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Button, Card, Form, Grid, Image, Transition } from 'semantic-ui-react';
+import { Button, Card, Feed, Form, Grid, Image, Transition } from 'semantic-ui-react';
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import ToggleButton from '../components/ToggleButton';
-import TeamCard from '../components/TeamCard';
 import ProjectEditor from '../components/ProjectEditor';
 
 function ProjectPage(props){
     const projectId = props.match.params.projectId;
     const { user } = useContext(AuthContext);
     const taskInputRef = useRef(null);
+    const teamInputRef = useRef(null);
 
     const [task, setTask] = useState('');
+    const [team, setTeam] = useState('');
 
     const {
         data: { getProject } = {}
@@ -31,6 +32,24 @@ function ProjectPage(props){
         variables: {
             projectId,
             name: task
+        }
+    })
+
+    const [addTeammember] = useMutation(ADD_TEAMMEMBER_MUTATION, {
+        update(){
+            setTeam('');
+            teamInputRef.current.blur();
+        },
+        variables: {
+            projectId,
+            teammember: team 
+        }
+    })
+
+    const [removeTeammember] = useMutation(REMOVE_TEAMMEMBER_MUTATION, {
+        variables: {
+            projectId,
+
         }
     })
 
@@ -53,7 +72,61 @@ function ProjectPage(props){
                             />
                         </Card>
                         <Transition.Group>
-                            <TeamCard teammembers={teammembers} />
+                        <Card>
+                            <Card.Content>
+                                <Card.Header>Team Members</Card.Header>
+                            </Card.Content>
+                            <Card.Content>
+                                <Feed>
+                                    {teammembers.map(teammember => (
+                                        <Feed.Event>
+                                            <Feed.Label>
+                                                <img alt={user} src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg' />
+                                            </Feed.Label>
+                                            <Feed.Content>
+                                                {teammember.username}
+                                            </Feed.Content>
+                                            <Feed.Content>
+                                            <Button circular
+                                                icon="terminal"
+                                                as="div"
+                                                color="orange"
+                                                floated="right"
+                                                onClick={removeTeammember}
+                                            />
+                                            </Feed.Content>
+                                        </Feed.Event>
+                                    ))}
+                                    <Feed.Event>
+                                            <Feed.Label>
+                                                <img alt={user} src='https://react.semantic-ui.com/images/avatar/small/laura.jpg' />
+                                            </Feed.Label>
+                                            <Feed.Content>
+                                                <Form>
+                                                    <div>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="New Teammember!!"
+                                                            name="task"
+                                                            value={team}
+                                                            onChange={event => setTeam(event.target.value)}
+                                                            ref={teamInputRef}
+                                                        />
+                                                        <Button circular
+                                                            icon="add"
+                                                            as="div"
+                                                            color="orange"
+                                                            type="submit"
+                                                            onClick={addTeammember}
+                                                        >
+                                                        </Button>
+                                                    </div>
+                                                </Form>
+                                            </Feed.Content>
+                                        </Feed.Event>
+                                </Feed>
+                            </Card.Content>
+                        </Card>
                         </Transition.Group>
                     </Grid.Column>
 
@@ -61,7 +134,6 @@ function ProjectPage(props){
                         <Card fluid>
                             <Card.Content>
                                 <Card.Header>{name}</Card.Header>
-                                <Card.Meta>Project owned by {username}{user && user.username === username && " (That's you!)"}</Card.Meta>
                                 <Card.Meta>Created {moment(createdAt).fromNow()}</Card.Meta>
                                 <Card.Description floated='left'>{description}</Card.Description>
                                 
@@ -139,6 +211,17 @@ function ProjectPage(props){
     return projectMarkup;
 }
 
+const ADD_TEAMMEMBER_MUTATION = gql `
+    mutation($projectId: ID!, $teammember: String!){
+        addTeammember(projectId: $projectId, teammember: $teammember){
+            id
+            teammembers{
+                username
+            }
+        }
+    }
+`
+
 const CREATE_TASK_MUTATION = gql `
     mutation($projectId: ID!, $name: String!){
         createTask(projectId: $projectId, name: $name){
@@ -148,6 +231,17 @@ const CREATE_TASK_MUTATION = gql `
                 name
                 description
                 createdAt
+                username
+            }
+        }
+    }
+`
+
+const REMOVE_TEAMMEMBER_MUTATION = gql `
+    mutation($projectId: ID!, $teammemberId: ID!){
+        removeTeammember(projectId: $projectId, teammemberId: $teammemberId) {
+            id
+            teammembers{
                 username
             }
         }
