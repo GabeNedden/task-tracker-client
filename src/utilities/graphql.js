@@ -8,6 +8,11 @@ export const FETCH_PROJECTS_QUERY = gql`
         description
         createdAt
         username
+        teammembers{
+            id
+            username
+            role
+        }
         tasks{
             id
             name

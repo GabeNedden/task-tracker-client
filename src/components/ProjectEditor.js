@@ -63,7 +63,7 @@ function ProjectEditor(props){
                                         style={{marginTop: 10}}
                                         floated='right'
                                         as="div"
-                                        color="orange"
+                                        color="grey"
                                         size="mini"
                                         onClick={() => console.log("Archive")}
                                     >

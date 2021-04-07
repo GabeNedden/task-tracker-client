@@ -28,7 +28,7 @@ function ProjectForm(){
         },
         onError(err) {
           return err;
-        },
+        }
       });
 
     function createProjectCallback(){

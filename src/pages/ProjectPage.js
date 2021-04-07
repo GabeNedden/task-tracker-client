@@ -6,6 +6,7 @@ import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import ToggleButton from '../components/ToggleButton';
 import ProjectEditor from '../components/ProjectEditor';
+import RemoveTeam from '../components/RemoveTeam';
 
 function ProjectPage(props){
     const projectId = props.match.params.projectId;
@@ -35,7 +36,7 @@ function ProjectPage(props){
         }
     })
 
-    const [addTeammember] = useMutation(ADD_TEAMMEMBER_MUTATION, {
+    const [addTeammember, { error }] = useMutation(ADD_TEAMMEMBER_MUTATION, {
         update(){
             setTeam('');
             teamInputRef.current.blur();
@@ -43,21 +44,17 @@ function ProjectPage(props){
         variables: {
             projectId,
             teammember: team 
-        }
-    })
-
-    const [removeTeammember] = useMutation(REMOVE_TEAMMEMBER_MUTATION, {
-        variables: {
-            projectId,
-
-        }
+        },
+        onError(err) {
+            return err;
+          }
     })
 
     let projectMarkup;
     if(!getProject){
         projectMarkup = <p>Loading Project</p>
     } else {
-        const { name, description, username, tasks, teammembers, createdAt } = getProject;
+        const { id, name, description, username, tasks, teammembers, createdAt } = getProject;
 
         projectMarkup = (
             <Grid>
@@ -71,6 +68,7 @@ function ProjectPage(props){
                             float='right'
                             />
                         </Card>
+                        {user && user.username === username && (
                         <Transition.Group>
                         <Card>
                             <Card.Content>
@@ -79,47 +77,45 @@ function ProjectPage(props){
                             <Card.Content>
                                 <Feed>
                                     {teammembers.map(teammember => (
-                                        <Feed.Event>
+                                        <Feed.Event key={teammember.id}>
                                             <Feed.Label>
-                                                <img alt={user} src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg' />
+                                                <RemoveTeam projectId={id} teammemberId={teammember.id}/>
                                             </Feed.Label>
                                             <Feed.Content>
                                                 {teammember.username}
-                                            </Feed.Content>
-                                            <Feed.Content>
-                                            <Button circular
-                                                icon="terminal"
-                                                as="div"
-                                                color="orange"
-                                                floated="right"
-                                                onClick={removeTeammember}
-                                            />
                                             </Feed.Content>
                                         </Feed.Event>
                                     ))}
                                     <Feed.Event>
                                             <Feed.Label>
-                                                <img alt={user} src='https://react.semantic-ui.com/images/avatar/small/laura.jpg' />
+                                                <img 
+                                                    alt={user} 
+                                                    src='https://react.semantic-ui.com/images/avatar/small/laura.jpg' 
+                                                    as="div"
+                                                    color="orange"
+                                                    type="submit"
+                                                    onClick={addTeammember}
+                                                    error={error ? true : false}
+                                                    />
                                             </Feed.Label>
                                             <Feed.Content>
                                                 <Form>
                                                     <div>
                                                         <input
                                                             type="text"
-                                                            placeholder="New Teammember!!"
+                                                            placeholder="New Teammember"
                                                             name="task"
                                                             value={team}
                                                             onChange={event => setTeam(event.target.value)}
                                                             ref={teamInputRef}
                                                         />
-                                                        <Button circular
-                                                            icon="add"
-                                                            as="div"
-                                                            color="orange"
-                                                            type="submit"
-                                                            onClick={addTeammember}
-                                                        >
-                                                        </Button>
+                                                        {error && (
+                                                            <div className="ui error message" style={{margin: 20}}>
+                                                                <ul className="list">
+                                                                    <li>{error.graphQLErrors[0].message}</li>
+                                                                </ul>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </Form>
                                             </Feed.Content>
@@ -128,6 +124,7 @@ function ProjectPage(props){
                             </Card.Content>
                         </Card>
                         </Transition.Group>
+                        )}
                     </Grid.Column>
 
                     <Grid.Column width={12}>
@@ -144,7 +141,7 @@ function ProjectPage(props){
                                         style={{marginTop: 10}}
                                         floated='right'
                                         as="div"
-                                        color="orange"
+                                        color="grey"
                                         size="mini"
                                         onClick={() => console.log("Archive")}
                                     >
@@ -237,17 +234,6 @@ const CREATE_TASK_MUTATION = gql `
     }
 `
 
-const REMOVE_TEAMMEMBER_MUTATION = gql `
-    mutation($projectId: ID!, $teammemberId: ID!){
-        removeTeammember(projectId: $projectId, teammemberId: $teammemberId) {
-            id
-            teammembers{
-                username
-            }
-        }
-    }
-`
-
 const FETCH_PROJECT_QUERY = gql `
     query($projectId: ID!){
         getProject(projectId: $projectId) {
@@ -259,7 +245,9 @@ const FETCH_PROJECT_QUERY = gql `
             createdAt
             username
             teammembers{
+                id
                 username
+                role
             }
             tasks{
                 id
