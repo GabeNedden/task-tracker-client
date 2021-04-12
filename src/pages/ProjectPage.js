@@ -11,8 +11,8 @@ import RemoveTeam from '../components/RemoveTeam';
 function ProjectPage(props){
     const projectId = props.match.params.projectId;
     const { user } = useContext(AuthContext);
-    const taskInputRef = useRef(null);
-    const teamInputRef = useRef(null);
+    const taskInputRef = useRef("");
+    const teamInputRef = useRef("");
 
     const [task, setTask] = useState('');
     const [team, setTeam] = useState('');
@@ -36,7 +36,7 @@ function ProjectPage(props){
         }
     })
 
-    const [addTeammember, { error }] = useMutation(ADD_TEAMMEMBER_MUTATION, {
+    const [addTeammember] = useMutation(ADD_TEAMMEMBER_MUTATION, {
         update(){
             setTeam('');
             teamInputRef.current.blur();
@@ -44,10 +44,7 @@ function ProjectPage(props){
         variables: {
             projectId,
             teammember: team 
-        },
-        onError(err) {
-            return err;
-          }
+        }
     })
 
     let projectMarkup;
@@ -59,75 +56,7 @@ function ProjectPage(props){
         projectMarkup = (
             <Grid>
                 <Grid.Row>
-
-                    <Grid.Column width={4}>
-                        <Card>
-                            <Image
-                            src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png'
-                            size='medium'
-                            float='right'
-                            />
-                        </Card>
-                        {user && user.username === username && (
-                        <Transition.Group>
-                        <Card>
-                            <Card.Content>
-                                <Card.Header>Team Members</Card.Header>
-                            </Card.Content>
-                            <Card.Content>
-                                <Feed>
-                                    {teammembers.map(teammember => (
-                                        <Feed.Event key={teammember.id}>
-                                            <Feed.Label>
-                                                <RemoveTeam projectId={id} teammemberId={teammember.id}/>
-                                            </Feed.Label>
-                                            <Feed.Content>
-                                                {teammember.username}
-                                            </Feed.Content>
-                                        </Feed.Event>
-                                    ))}
-                                    <Feed.Event>
-                                            <Feed.Label>
-                                                <img 
-                                                    alt={user} 
-                                                    src='https://react.semantic-ui.com/images/avatar/small/laura.jpg' 
-                                                    as="div"
-                                                    color="orange"
-                                                    type="submit"
-                                                    onClick={addTeammember}
-                                                    error={error ? true : false}
-                                                    />
-                                            </Feed.Label>
-                                            <Feed.Content>
-                                                <Form>
-                                                    <div>
-                                                        <input
-                                                            type="text"
-                                                            placeholder="New Teammember"
-                                                            name="task"
-                                                            value={team}
-                                                            onChange={event => setTeam(event.target.value)}
-                                                            ref={teamInputRef}
-                                                        />
-                                                        {error && (
-                                                            <div className="ui error message" style={{margin: 20}}>
-                                                                <ul className="list">
-                                                                    <li>{error.graphQLErrors[0].message}</li>
-                                                                </ul>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </Form>
-                                            </Feed.Content>
-                                        </Feed.Event>
-                                </Feed>
-                            </Card.Content>
-                        </Card>
-                        </Transition.Group>
-                        )}
-                    </Grid.Column>
-
-                    <Grid.Column width={12}>
+                    <Grid.Column width={10}>
                         <Card fluid>
                             <Card.Content>
                                 <Card.Header>{name}</Card.Header>
@@ -177,28 +106,137 @@ function ProjectPage(props){
                             </Card.Content>
                         </Card>
                         )}
-                        {tasks.map(task => (
-                            <Card fluid key={task.id}>
-                                <Card.Content>
-                                    {user && user.username === username && (
-                                    <Button
-                                        as="div"
-                                        color="grey"
-                                        size="small"
-                                        floated='right'
-                                        onClick={() => console.log("complete task")}
-                                    >
-                                        Complete
-                                    </Button>
-                                    )}
-                                    <Card.Header>{task.name}</Card.Header>
-                                    <Card.Meta>Unassigned Task</Card.Meta>
-                                </Card.Content>
-                            </Card>
-                        ))}
+                        <Transition.Group>
+                            {tasks.map(task => (
+                                <Card fluid key={task.id}>
+                                    <Card.Content>
+                                        {user && user.username === username && (
+                                        <Button
+                                            as="div"
+                                            color="grey"
+                                            size="small"
+                                            floated='right'
+                                            onClick={() => console.log("complete task")}
+                                        >
+                                            Complete
+                                        </Button>
+                                        )}
+                                        <Card.Header>{task.name}</Card.Header>
+                                        <Card.Meta>Unassigned Task</Card.Meta>
+                                    </Card.Content>
+                                </Card>
+                            ))}
+                        </Transition.Group>
+                        
                         {user && user.username === username && (
                                 <ProjectEditor user={user} project={getProject} />
                             )}
+                    </Grid.Column>
+
+                    <Grid.Column width={6}>
+                        <Card fluid>
+                            <Image
+                            src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png'
+                            size='medium'
+                            float='right'
+                            />
+                        </Card>
+                        {user && user.username === username && (
+                        <Card fluid>
+                            <Card.Content>
+                            <Form>
+                                <div className="ui action input fluid">
+                                    <input
+                                        type="text"
+                                        placeholder="Add a new task!"
+                                        name="task"
+                                        value={task}
+                                        onChange={event => setTask(event.target.value)}
+                                        ref={taskInputRef}
+                                    />
+                                    <button 
+                                        className="ui button grey mini"
+                                        disabled={task.trim() === ''}
+                                        type="submit"
+                                        onClick={createTask}
+                                    >
+                                            New Task
+                                    </button>
+                                </div>
+                            </Form>
+                            </Card.Content>
+                        </Card>
+                        )}
+                        <Transition.Group>
+                            {tasks.map(task => (
+                                <Card fluid key={task.id}>
+                                    <Card.Content>
+                                        {user && user.username === username && (
+                                        <Button
+                                            as="div"
+                                            color="grey"
+                                            size="small"
+                                            floated='right'
+                                            onClick={() => console.log("complete task")}
+                                        >
+                                            Complete
+                                        </Button>
+                                        )}
+                                        <Card.Header>{task.name}</Card.Header>
+                                        <Card.Meta>Unassigned Task</Card.Meta>
+                                    </Card.Content>
+                                </Card>
+                            ))}
+                        </Transition.Group>
+                        {user && user.username === username && (
+                        <Transition.Group>
+                        <Card fluid>
+                            <Card.Content>
+                                <Card.Header>Team Members</Card.Header>
+                            </Card.Content>
+                            <Card.Content>
+                                <Feed>
+                                    {teammembers.map(teammember => (
+                                        <Feed.Event key={teammember.id}>
+                                            <Feed.Label>
+                                                <RemoveTeam projectId={id} teammemberId={teammember.id}/>
+                                            </Feed.Label>
+                                            <Feed.Content>
+                                                {teammember.username}
+                                            </Feed.Content>
+                                        </Feed.Event>
+                                    ))}
+                                    <Feed.Event>
+                                            <Feed.Label>
+                                                <img 
+                                                    alt={user} 
+                                                    src='https://react.semantic-ui.com/images/avatar/small/laura.jpg' 
+                                                    as="div"
+                                                    color="orange"
+                                                    type="submit"
+                                                    onClick={addTeammember}
+                                                    />
+                                            </Feed.Label>
+                                            <Feed.Content>
+                                                <Form>
+                                                    <div>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="New Teammember"
+                                                            name="task"
+                                                            value={team}
+                                                            onChange={event => setTeam(event.target.value)}
+                                                            ref={teamInputRef}
+                                                        />
+                                                    </div>
+                                                </Form>
+                                            </Feed.Content>
+                                        </Feed.Event>
+                                </Feed>
+                            </Card.Content>
+                        </Card>
+                        </Transition.Group>
+                        )}
                     </Grid.Column>
                             
                 </Grid.Row>
@@ -211,8 +249,9 @@ function ProjectPage(props){
 const ADD_TEAMMEMBER_MUTATION = gql `
     mutation($projectId: ID!, $teammember: String!){
         addTeammember(projectId: $projectId, teammember: $teammember){
-            id
+            id,
             teammembers{
+                id
                 username
             }
         }
@@ -247,12 +286,10 @@ const FETCH_PROJECT_QUERY = gql `
             teammembers{
                 id
                 username
-                role
             }
             tasks{
                 id
                 name
-                username
             }
         }
     }
