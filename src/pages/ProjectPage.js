@@ -141,53 +141,7 @@ function ProjectPage(props){
                             float='right'
                             />
                         </Card>
-                        {user && user.username === username && (
-                        <Card fluid>
-                            <Card.Content>
-                            <Form>
-                                <div className="ui action input fluid">
-                                    <input
-                                        type="text"
-                                        placeholder="Add a new task!"
-                                        name="task"
-                                        value={task}
-                                        onChange={event => setTask(event.target.value)}
-                                        ref={taskInputRef}
-                                    />
-                                    <button 
-                                        className="ui button grey mini"
-                                        disabled={task.trim() === ''}
-                                        type="submit"
-                                        onClick={createTask}
-                                    >
-                                            New Task
-                                    </button>
-                                </div>
-                            </Form>
-                            </Card.Content>
-                        </Card>
-                        )}
-                        <Transition.Group>
-                            {tasks.map(task => (
-                                <Card fluid key={task.id}>
-                                    <Card.Content>
-                                        {user && user.username === username && (
-                                        <Button
-                                            as="div"
-                                            color="grey"
-                                            size="small"
-                                            floated='right'
-                                            onClick={() => console.log("complete task")}
-                                        >
-                                            Complete
-                                        </Button>
-                                        )}
-                                        <Card.Header>{task.name}</Card.Header>
-                                        <Card.Meta>Unassigned Task</Card.Meta>
-                                    </Card.Content>
-                                </Card>
-                            ))}
-                        </Transition.Group>
+                        
                         {user && user.username === username && (
                         <Transition.Group>
                         <Card fluid>
