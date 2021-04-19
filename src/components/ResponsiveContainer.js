@@ -5,7 +5,6 @@ import {
   Button,
   Container,
   Icon,
-  Header,
   Menu,
   Segment,
   Sidebar,
@@ -67,13 +66,9 @@ class DesktopContainer extends Component {
                   </Menu.Item>
                 </Container>
               </Menu>
-              <Header>
-                  Testing
-              </Header>
+              {children}
             </Segment>
           </Visibility>
-  
-          {children}
         </Media>
       )
     }

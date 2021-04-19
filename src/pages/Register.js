@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Divider, Form, Grid, Segment } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Grid, Segment } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
@@ -35,11 +35,12 @@ const Register = (props) => {
     }
 
     return (
-        <Segment placeholder style={{marginTop: 50, height: 380}}>
+        <Container>
+        <Segment inverted placeholder style={{marginTop: 50, height: 380}}>
             <Grid columns={2} relaxed='very' stackable>
     
             <Grid.Column>
-                <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
+                <Form inverted onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
                     <Form.Input
                         label="Username"
                         placeholder="Username"
@@ -76,7 +77,7 @@ const Register = (props) => {
                         error={errors.confirmPassword ? true : false}
                         onChange={onChange}
                     />
-                    <Button type="submit" primary>Register</Button>
+                    <Button inverted type="submit" primary>Register</Button>
                 </Form>
                 {Object.keys(errors).length > 0 && (
                     <div className="ui error message">
@@ -91,6 +92,7 @@ const Register = (props) => {
 
             <Grid.Column verticalAlign='middle'>
                 <Button
+                    inverted
                     content='Login'
                     icon='bicycle'
                     size='big'
@@ -101,6 +103,7 @@ const Register = (props) => {
 
             <Divider vertical>Or</Divider>
         </Segment>
+        </Container>
     );
 };
 

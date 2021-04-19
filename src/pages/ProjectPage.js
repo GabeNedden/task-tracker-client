@@ -1,7 +1,7 @@
 import React, { useContext, useState, useRef } from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Button, Card, Feed, Form, Grid, Image, Transition } from 'semantic-ui-react';
+import { Button, Card, Container, Feed, Form, Grid, Image, Transition } from 'semantic-ui-react';
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import ToggleButton from '../components/ToggleButton';
@@ -54,6 +54,7 @@ function ProjectPage(props){
         const { id, name, description, username, tasks, teammembers, createdAt } = getProject;
 
         projectMarkup = (
+            <Container>
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={10}>
@@ -195,6 +196,7 @@ function ProjectPage(props){
                             
                 </Grid.Row>
             </Grid>
+            </Container>
         )
     }
     return projectMarkup;

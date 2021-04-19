@@ -30,7 +30,7 @@ function Home() {
             {loading ? (
                 <div>
                 <Segment>
-                  <Dimmer inverted active>
+                  <Dimmer active>
                     <Loader indeterminate>Connecting to Database</Loader>
                   </Dimmer>
             
