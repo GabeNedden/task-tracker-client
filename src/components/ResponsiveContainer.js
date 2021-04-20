@@ -1,15 +1,7 @@
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import {
-  Button,
-  Container,
-  Icon,
-  Menu,
-  Segment,
-  Sidebar,
-  Visibility,
-} from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Button, Container, Icon, Menu, Segment, Sidebar, Visibility } from 'semantic-ui-react'
 
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
@@ -19,22 +11,20 @@ const { MediaContextProvider, Media } = createMedia({
   },
 })
 
-class DesktopContainer extends Component {
-    state = {}
+const DesktopContainer = (props) => {
+  const [isFixed, setFixed] = useState(false);
   
-    hideFixedMenu = () => this.setState({ fixed: false })
-    showFixedMenu = () => this.setState({ fixed: true })
+  const hideFixedMenu = () => setFixed(false)
+  const showFixedMenu = () => setFixed(true)
   
-    render() {
-      const { children } = this.props
-      const { fixed } = this.state
+  const { children } = props
   
       return (
         <Media greaterThan='mobile'>
           <Visibility
             once={false}
-            onBottomPassed={this.showFixedMenu}
-            onBottomPassedReverse={this.hideFixedMenu}
+            onBottomPassed={showFixedMenu}
+            onBottomPassedReverse={hideFixedMenu}
           >
             <Segment
               inverted
@@ -43,10 +33,10 @@ class DesktopContainer extends Component {
               vertical
             >
               <Menu
-                fixed={fixed ? 'top' : null}
-                inverted={!fixed}
-                pointing={!fixed}
-                secondary={!fixed}
+                fixed={isFixed ? 'top' : null}
+                inverted={!isFixed}
+                pointing={!isFixed}
+                secondary={!isFixed}
                 size='large'
               >
                 <Container>
@@ -57,10 +47,10 @@ class DesktopContainer extends Component {
                   <Menu.Item as='a'>Company</Menu.Item>
                   <Menu.Item as='a'>Careers</Menu.Item>
                   <Menu.Item position='right'>
-                    <Button as='a' inverted={!fixed}>
+                    <Button as='a' inverted={!isFixed}>
                       Log in
                     </Button>
-                    <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
+                    <Button as='a' inverted={!isFixed} primary={isFixed} style={{ marginLeft: '0.5em' }}>
                       Sign Up
                     </Button>
                   </Menu.Item>
@@ -71,23 +61,19 @@ class DesktopContainer extends Component {
           </Visibility>
         </Media>
       )
-    }
   }
   
   DesktopContainer.propTypes = {
     children: PropTypes.node,
   }
 
-  class MobileContainer extends Component {
-    state = {}
+  const MobileContainer = (props) => {
+    const [isSidebar, setSidebar] = useState(false)
   
-    handleSidebarHide = () => this.setState({ sidebarOpened: false })
+    const handleSidebarHide = () => setSidebar(false);
+    const handleToggle = () => setSidebar(true);
   
-    handleToggle = () => this.setState({ sidebarOpened: true })
-  
-    render() {
-      const { children } = this.props
-      const { sidebarOpened } = this.state
+      const { children } = props
   
       return (
         <Media as={Sidebar.Pushable} at='mobile'>
@@ -96,9 +82,9 @@ class DesktopContainer extends Component {
               as={Menu}
               animation='overlay'
               inverted
-              onHide={this.handleSidebarHide}
+              onHide={handleSidebarHide}
               vertical
-              visible={sidebarOpened}
+              visible={isSidebar}
             >
               <Menu.Item as='a' active>
                 Home
@@ -110,7 +96,7 @@ class DesktopContainer extends Component {
               <Menu.Item as='a'>Sign Up</Menu.Item>
             </Sidebar>
   
-            <Sidebar.Pusher dimmed={sidebarOpened}>
+            <Sidebar.Pusher dimmed={isSidebar}>
               <Segment
                 inverted
                 textAlign='center'
@@ -119,7 +105,7 @@ class DesktopContainer extends Component {
               >
                 <Container>
                   <Menu inverted pointing secondary size='large'>
-                    <Menu.Item onClick={this.handleToggle}>
+                    <Menu.Item onClick={handleToggle}>
                       <Icon name='sidebar' />
                     </Menu.Item>
                     <Menu.Item position='right'>
@@ -140,7 +126,6 @@ class DesktopContainer extends Component {
         </Media>
       )
     }
-  }
   
   MobileContainer.propTypes = {
     children: PropTypes.node,
