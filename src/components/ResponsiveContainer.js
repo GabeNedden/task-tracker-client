@@ -1,7 +1,10 @@
-import { createMedia } from '@artsy/fresnel'
-import PropTypes from 'prop-types'
-import React, { useState } from 'react'
-import { Button, Container, Icon, Menu, Segment, Sidebar, Visibility } from 'semantic-ui-react'
+import { createMedia } from '@artsy/fresnel';
+import PropTypes from 'prop-types';
+import React, { useContext, useState } from 'react';
+import { Button, Container, Icon, Menu, Segment, Sidebar, Visibility } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+
+import { AuthContext } from '../context/auth';
 
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
@@ -12,6 +15,13 @@ const { MediaContextProvider, Media } = createMedia({
 })
 
 const DesktopContainer = (props) => {
+  const { user, logout } = useContext(AuthContext); 
+  const pathname = window.location.pathname;
+  
+  const path = pathname === '/' ? 'projects' : pathname.substr(1);
+  const [activeItem, setActiveItem] = useState(path);
+
+  const handleItemClick = (e, { name }) => setActiveItem(name);
   const [isFixed, setFixed] = useState(false);
   
   const hideFixedMenu = () => setFixed(false)
@@ -29,7 +39,7 @@ const DesktopContainer = (props) => {
             <Segment
               inverted
               textAlign='center'
-              style={{ minHeight: 700, padding: '1em 0em' }}
+              style={{ minHeight: 10, padding: '1em 0em' }}
               vertical
             >
               <Menu
@@ -40,25 +50,60 @@ const DesktopContainer = (props) => {
                 size='large'
               >
                 <Container>
-                  <Menu.Item as='a' active>
-                    Home
-                  </Menu.Item>
-                  <Menu.Item as='a'>Work</Menu.Item>
+                  <Menu.Item
+                    name='projects'
+                    active={activeItem === 'projects'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/'
+                  />
                   <Menu.Item as='a'>Company</Menu.Item>
                   <Menu.Item as='a'>Careers</Menu.Item>
-                  <Menu.Item position='right'>
-                    <Button as='a' inverted={!isFixed}>
-                      Log in
-                    </Button>
-                    <Button as='a' inverted={!isFixed} primary={isFixed} style={{ marginLeft: '0.5em' }}>
-                      Sign Up
-                    </Button>
-                  </Menu.Item>
+                  <Menu.Item as='a'>Contact</Menu.Item>
+
+                  {user ? 
+                  <Menu.Menu position='right'>
+                  <Menu.Item
+                    name={user.username}
+                    active={activeItem === 'profile'}
+                    as={Link}
+                    to='/'
+                    inverted={!isFixed}
+                  />
+                    <Menu.Item
+                      name='logout'
+                      onClick={logout}
+                      inverted={!isFixed}
+                      primary={!isFixed}
+                    />
+                  </Menu.Menu> 
+                  : 
+                  <Menu.Menu position='right'>
+                    <Menu.Item
+                      name='login'
+                      active={activeItem === 'login'}
+                      onClick={handleItemClick}
+                      as={Link}
+                      to='/login'
+                      inverted={!isFixed}
+                    />
+                      <Menu.Item
+                        name='register'
+                        active={activeItem === 'register'}
+                        onClick={handleItemClick}
+                        as={Link}
+                        to='/register'
+                        inverted={!isFixed}
+                        primary={isFixed}
+                      />
+                    </Menu.Menu>
+                    }
+                  
                 </Container>
               </Menu>
-              {children}
             </Segment>
           </Visibility>
+          {children}
         </Media>
       )
   }
@@ -100,7 +145,7 @@ const DesktopContainer = (props) => {
               <Segment
                 inverted
                 textAlign='center'
-                style={{ minHeight: 350, padding: '1em 0em' }}
+                style={{ minHeight: 10, padding: '1em 0em' }}
                 vertical
               >
                 <Container>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Container, Divider, Form, Grid, Segment } from 'semantic-ui-react';
+import { Button, Container, Form, Grid, Segment } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
@@ -101,7 +101,6 @@ const Register = (props) => {
             </Grid.Column>
             </Grid>
 
-            <Divider vertical>Or</Divider>
         </Segment>
         </Container>
     );

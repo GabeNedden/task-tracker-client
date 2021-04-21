@@ -12,6 +12,12 @@ function Home() {
     const { loading, data: { getProjects: projects } = {} } = useQuery(FETCH_PROJECTS_QUERY);
     
     return (
+        <Segment
+              inverted
+              textAlign='center'
+              style={{ minHeight: 100, padding: '1em 0em' }}
+              vertical
+            >
         <Grid stackable centered>
             <Grid.Row className="page-title">
                 {!user && !loading && (
@@ -49,6 +55,7 @@ function Home() {
 
             </Grid.Row>
         </Grid>
+        </Segment>
     );
 };
 

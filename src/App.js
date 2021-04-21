@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import Matrix from './pages/Matrix';
 import ProjectPage from './pages/ProjectPage';
 import ResponsiveContainer from './components/ResponsiveContainer';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <AuthRoute exact path='/matrix' component={Matrix}/>
           <Route exact path='/project/:projectId' component={ProjectPage}/>
         </ResponsiveContainer>
+        <Footer />
     </Router>
     </AuthProvider>
   );
