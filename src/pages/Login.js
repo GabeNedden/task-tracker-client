@@ -33,6 +33,12 @@ const Login = (props) => {
     };
 
     return (
+        <Segment
+              inverted
+              textAlign='center'
+              style={{ minHeight: 100, padding: '1em 0em' }}
+              vertical
+            >
         <Container>
         <Segment inverted placeholder style={{marginTop: 50, height: 380}}>
             <Grid columns={2} relaxed='very' stackable>
@@ -57,7 +63,7 @@ const Login = (props) => {
                         error={errors.password ? true : false}
                         onChange={onChange}
                     />
-                    <Button inverted type="submit" primary>Login</Button>
+                    <Button inverted type="submit">Login</Button>
                 </Form>
                 {Object.keys(errors).length > 0 && (
                     <div className="ui error message">
@@ -83,6 +89,7 @@ const Login = (props) => {
 
         </Segment>
         </Container>
+        </Segment>
     );
 };
 

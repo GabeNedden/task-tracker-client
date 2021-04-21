@@ -1,7 +1,7 @@
 import React, { useContext, useState, useRef } from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Button, Card, Container, Feed, Form, Grid, Image, Transition } from 'semantic-ui-react';
+import { Button, Card, Container, Feed, Form, Grid, Image, Segment, Transition } from 'semantic-ui-react';
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import ToggleButton from '../components/ToggleButton';
@@ -54,15 +54,20 @@ function ProjectPage(props){
         const { id, name, description, username, tasks, teammembers, createdAt } = getProject;
 
         projectMarkup = (
+            <Segment
+              inverted
+              style={{ minHeight: 100, padding: '1em 0em' }}
+              vertical
+            >
             <Container>
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={10}>
                         <Card fluid>
                             <Card.Content>
-                                <Card.Header>{name}</Card.Header>
-                                <Card.Meta>Created {moment(createdAt).fromNow()}</Card.Meta>
-                                <Card.Description floated='left'>{description}</Card.Description>
+                                <Card.Header style={{color: "white"}}>{name}</Card.Header>
+                                <Card.Meta style={{color: "white"}}>Created {moment(createdAt).fromNow()}</Card.Meta>
+                                <Card.Description style={{color: "white"}} floated='left'>{description}</Card.Description>
                                 
                                 {user && user.username === username && (
                                     <>
@@ -122,8 +127,8 @@ function ProjectPage(props){
                                             Complete
                                         </Button>
                                         )}
-                                        <Card.Header>{task.name}</Card.Header>
-                                        <Card.Meta>Unassigned Task</Card.Meta>
+                                        <Card.Header style={{color: "white"}}>{task.name}</Card.Header>
+                                        <Card.Meta style={{color: "white"}}>Unassigned Task</Card.Meta>
                                     </Card.Content>
                                 </Card>
                             ))}
@@ -137,8 +142,7 @@ function ProjectPage(props){
                     <Grid.Column width={6}>
                         <Card fluid>
                             <Image
-                            src='https://icons-for-free.com/iconfiles/png/512/desk+furniture+lamp+office+table+work+icon-1320185905879312737.png'
-                            size='medium'
+                            src='https://images.unsplash.com/photo-1493673272479-a20888bcee10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80'
                             float='right'
                             />
                         </Card>
@@ -147,7 +151,7 @@ function ProjectPage(props){
                         <Transition.Group>
                         <Card fluid>
                             <Card.Content>
-                                <Card.Header>Team Members</Card.Header>
+                                <Card.Header style={{color: "white"}}>Team Members</Card.Header>
                             </Card.Content>
                             <Card.Content>
                                 <Feed>
@@ -197,6 +201,7 @@ function ProjectPage(props){
                 </Grid.Row>
             </Grid>
             </Container>
+            </Segment>
         )
     }
     return projectMarkup;
