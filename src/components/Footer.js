@@ -1,6 +1,8 @@
 import React from 'react';
 import { Container, Header, Grid, List, Segment } from 'semantic-ui-react';
 
+//force footer to bottom of page?
+
 function Footer() {
     return (
         <Segment inverted vertical style={{ padding: '5em 0em' }}>
