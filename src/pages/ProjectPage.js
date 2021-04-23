@@ -5,8 +5,8 @@ import { Button, Card, Container, Feed, Form, Grid, Image, Segment, Transition }
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import ToggleButton from '../components/ToggleButton';
-import ProjectEditor from '../components/ProjectEditor';
 import RemoveTeam from '../components/RemoveTeam';
+import TeamModal from '../components/TeamModal';
 
 function ProjectPage(props){
     const projectId = props.match.params.projectId;
@@ -133,25 +133,23 @@ function ProjectPage(props){
                                 </Card>
                             ))}
                         </Transition.Group>
-                        
-                        {user && user.username === username && (
-                                <ProjectEditor user={user} project={getProject} />
-                            )}
+
                     </Grid.Column>
 
                     <Grid.Column width={6}>
                         <Card fluid>
                             <Image
-                            src='https://images.unsplash.com/photo-1493673272479-a20888bcee10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80'
+                            src='https://ic.pics.livejournal.com/z3000/8983861/2025363/2025363_original.jpg'
+                            //src='https://images.unsplash.com/photo-1493673272479-a20888bcee10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80'
                             float='right'
                             />
                         </Card>
                         
                         {user && user.username === username && (
-                        <Transition.Group>
                         <Card fluid>
                             <Card.Content>
-                                <Card.Header style={{color: "white"}}>Team Members</Card.Header>
+                                <TeamModal user={user} project={getProject}/>
+                                <Card.Header style={{color: "white", marginTop: 5}}>Team Members</Card.Header>
                             </Card.Content>
                             <Card.Content>
                                 <Feed>
@@ -194,7 +192,6 @@ function ProjectPage(props){
                                 </Feed>
                             </Card.Content>
                         </Card>
-                        </Transition.Group>
                         )}
                     </Grid.Column>
                             

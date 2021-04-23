@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
+import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { Dimmer, Grid, Image, Loader, Segment, Transition } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
 import ProjectCard from '../components/ProjectCard';
 import ProjectForm from '../components/ProjectForm';
-import { FETCH_PROJECTS_QUERY } from '../utilities/graphql';
 
 function Home() {
     const { user } = useContext(AuthContext)
-    const { loading, data: { getProjects: projects } = {} } = useQuery(FETCH_PROJECTS_QUERY);
+    const { loading, data: { getMyProjects: projects } = {} } = useQuery(FETCH_MY_PROJECTS_QUERY);
+
+    console.log(projects)
     
     return (
         <Segment
@@ -58,5 +60,27 @@ function Home() {
         </Segment>
     );
 };
+
+const FETCH_MY_PROJECTS_QUERY = gql `
+    query{
+        getMyProjects{
+            id
+            name
+            description
+            status
+            privacy
+            createdAt
+            username
+            teammembers{
+                id
+                username
+            }
+            tasks{
+                id
+                name
+            }
+        }
+    }
+`
 
 export default Home;

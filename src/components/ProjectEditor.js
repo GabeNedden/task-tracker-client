@@ -1,9 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { Button, Card, Form } from 'semantic-ui-react';
+import React, { useState } from 'react';
 import gql from 'graphql-tag';
+import { Button, Form } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
-
-import { AuthContext } from '../context/auth';
 
 function ProjectEditor(props){
     const initialState = {
@@ -11,9 +9,6 @@ function ProjectEditor(props){
         name: props.project.name,
         description: props.project.description
     }
-
-    const { user } = useContext(AuthContext);
-    const { username } = props.user;
         
     const [values, setValues] = useState(initialState);
     
@@ -36,12 +31,9 @@ function ProjectEditor(props){
       });
 
     return (
-        <Card fluid>
-            <Card.Content >
             <Form onSubmit={onSubmit}>
                     <Form.Field>
-                        <Form.Input
-                            transparent 
+                        <Form.Input 
                             size="big"
                             placeholder="Project Name"
                             name="name"
@@ -58,22 +50,8 @@ function ProjectEditor(props){
                         <Button floated="left" size="mini" type="submit" color="grey">
                             Update
                         </Button>
-                        {user && user.username === username && (
-                                    <Button
-                                        style={{marginTop: 10}}
-                                        floated='right'
-                                        as="div"
-                                        color="grey"
-                                        size="mini"
-                                        onClick={() => console.log("Archive")}
-                                    >
-                                            Archive Project
-                                    </Button>
-                                )}
                     </Form.Field>
                 </Form>
-            </Card.Content>
-        </Card>
             )
 }
 
