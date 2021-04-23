@@ -1,27 +1,24 @@
 import React, { useState } from 'react';
+import { Button, Form, Header, Image, Modal } from 'semantic-ui-react';
 import gql from 'graphql-tag';
-import { Button, Form } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 
-function ProjectEditor(props){
-    const initialState = {
+function ProjectModal(props) {
+
+  const initialState = {
         projectId: props.project.id,
         name: props.project.name,
         description: props.project.description
     }
-        
     const [values, setValues] = useState(initialState);
-    
     const onChange = (event) => {
             setValues({...values, [event.target.name]: event.target.value});
         };
-    
     const onSubmit = (event) => {
             event.preventDefault();
             updateProject();
             console.log(values)
         }
-
     const [updateProject] = useMutation(UPDATE_PROJECT_MUTATION, {
         variables: {
             projectId: values.projectId,
@@ -30,8 +27,24 @@ function ProjectEditor(props){
         }
       });
 
-    return (
-            <Form onSubmit={onSubmit}>
+  const [firstOpen, setFirstOpen] = React.useState(false)
+
+  return (
+    <>
+      <Button style={{marginTop: 10}} size="mini" floated='right' color='grey' onClick={() => setFirstOpen(true)}>Edit</Button>
+
+      <Modal
+        onClose={() => setFirstOpen(false)}
+        onOpen={() => setFirstOpen(true)}
+        open={firstOpen}
+        size='small'
+      >
+        <Modal.Header>Edit your project name or description</Modal.Header>
+        <Modal.Content image>
+            <Image size='medium' src='https://ic.pics.livejournal.com/z3000/8983861/2025363/2025363_original.jpg' wrapped />
+            <Modal.Description>
+                <Header>Current Project Nameeeeeeeeeeeeee</Header>
+                <Form onSubmit={onSubmit}>
                     <Form.Field>
                         <Form.Input 
                             size="big"
@@ -46,12 +59,16 @@ function ProjectEditor(props){
                             onChange={onChange}
                             value={values.description}
                             />
-                        <Button floated="right" size="mini" type="submit" color="grey">
+                        <Button size="mini" type="submit" color="grey">
                             Update
                         </Button>
                     </Form.Field>
                 </Form>
-            )
+            </Modal.Description>
+        </Modal.Content>
+      </Modal>
+    </>
+  )
 }
 
 const UPDATE_PROJECT_MUTATION = gql`
@@ -64,4 +81,5 @@ const UPDATE_PROJECT_MUTATION = gql`
     }
 `
 
-export default ProjectEditor;
+
+export default ProjectModal;

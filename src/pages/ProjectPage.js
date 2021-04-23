@@ -7,6 +7,7 @@ import { AuthContext } from '../context/auth';
 import ToggleButton from '../components/ToggleButton';
 import RemoveTeam from '../components/RemoveTeam';
 import TeamModal from '../components/TeamModal';
+import ProjectModal from '../components/ProjectModal';
 
 function ProjectPage(props){
     const projectId = props.match.params.projectId;
@@ -71,6 +72,7 @@ function ProjectPage(props){
                                 
                                 {user && user.username === username && (
                                     <>
+                                    <ProjectModal project={getProject}/>
                                     <ToggleButton user={user} project={getProject} />
                                     <Button
                                         style={{marginTop: 10}}
@@ -80,7 +82,7 @@ function ProjectPage(props){
                                         size="mini"
                                         onClick={() => console.log("Archive")}
                                     >
-                                            Archive Project
+                                            Archive
                                     </Button>
                                     </>
                                 )}
