@@ -164,8 +164,6 @@ const DesktopContainer = (props) => {
                   <Menu.Item as='a'>Careers</Menu.Item>
                   <Menu.Item as='a'>Contact</Menu.Item>
 
-                  
-                  <Menu.Menu position='right'>
                   <Menu.Item
                     name={user.username}
                     active={activeItem === 'profile'}
@@ -176,7 +174,6 @@ const DesktopContainer = (props) => {
                       name='logout'
                       onClick={logout}
                     />
-                  </Menu.Menu> 
                   </div>
                   : 
                   <div>
@@ -220,7 +217,22 @@ const DesktopContainer = (props) => {
                     <Menu.Item onClick={handleToggle}>
                       <Icon name='sidebar' />
                     </Menu.Item>
-                    <Menu.Menu position='right'>
+
+                    {user ? (
+                      <Menu.Menu position='right'>
+                      <Menu.Item
+                    name={user.username}
+                    active={activeItem === 'profile'}
+                    as={Link}
+                    to='/'
+                  />
+                    <Menu.Item
+                      name='logout'
+                      onClick={logout}
+                    />
+                      </Menu.Menu>
+                    ) : (
+                      <Menu.Menu position='right'>
                     <Menu.Item
                       name='login'
                       active={activeItem === 'login'}
@@ -236,6 +248,8 @@ const DesktopContainer = (props) => {
                         to='/register'
                       />
                     </Menu.Menu>
+                    )}
+                    
                     </Menu>
                 </Container>
               </Segment>
