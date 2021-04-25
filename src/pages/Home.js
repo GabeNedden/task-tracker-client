@@ -10,22 +10,25 @@ import ProjectForm from '../components/ProjectForm';
 function Home() {
     const { user } = useContext(AuthContext)
     const { loading, data: { getMyProjects: projects } = {} } = useQuery(FETCH_MY_PROJECTS_QUERY);
-
-    console.log(projects)
     
     return (
         <Segment
               inverted
               textAlign='center'
-              style={{ minHeight: 100, padding: '1em 0em' }}
+              style={{ minHeight: 700, padding: '1em 0em' }}
               vertical
             >
         <Grid stackable centered>
             <Grid.Row className="page-title">
-                {!user && !loading && (
+                {user ? (
                     <>
                         <h1>Projects</h1>
-                        <p>Please register to start a project</p>
+                        <p></p>
+                    </> 
+                    ) : (
+                        <>
+                        <h1>Home</h1>
+                        <p>Sign in to get started</p>
                     </> 
                     )}
             </Grid.Row>

@@ -1,7 +1,7 @@
 import { createMedia } from '@artsy/fresnel';
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
-import { Button, Container, Icon, Menu, Segment, Sidebar, Visibility } from 'semantic-ui-react';
+import { Container, Icon, Menu, Segment, Sidebar, Visibility } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import { AuthContext } from '../context/auth';
@@ -38,7 +38,6 @@ const DesktopContainer = (props) => {
           >
             <Segment
               inverted
-              textAlign='center'
               style={{ minHeight: 10, padding: '1em 0em' }}
               vertical
             >
@@ -49,6 +48,7 @@ const DesktopContainer = (props) => {
                 secondary={!isFixed}
                 size='large'
               >
+                {user ? 
                 <Container>
                   <Menu.Item
                     name='projects'
@@ -61,7 +61,7 @@ const DesktopContainer = (props) => {
                   <Menu.Item as='a'>Careers</Menu.Item>
                   <Menu.Item as='a'>Contact</Menu.Item>
 
-                  {user ? 
+                  
                   <Menu.Menu position='right'>
                   <Menu.Item
                     name={user.username}
@@ -77,7 +77,20 @@ const DesktopContainer = (props) => {
                       primary={!isFixed}
                     />
                   </Menu.Menu> 
+                  </Container>
                   : 
+                  <Container>
+                  <Menu.Item
+                    name='projects'
+                    active={activeItem === 'projects'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/'
+                  > Home </Menu.Item>
+                  <Menu.Item as='a'>Company</Menu.Item>
+                  <Menu.Item as='a'>Careers</Menu.Item>
+                  <Menu.Item as='a'>Contact</Menu.Item>
+
                   <Menu.Menu position='right'>
                     <Menu.Item
                       name='login'
@@ -96,14 +109,13 @@ const DesktopContainer = (props) => {
                         inverted={!isFixed}
                         primary={isFixed}
                       />
-                    </Menu.Menu>
-                    }
-                  
+                    </Menu.Menu>                  
                 </Container>
+                }
               </Menu>
+              {children}
             </Segment>
           </Visibility>
-          {children}
         </Media>
       )
   }
@@ -117,6 +129,14 @@ const DesktopContainer = (props) => {
   
     const handleSidebarHide = () => setSidebar(false);
     const handleToggle = () => setSidebar(true);
+
+    const { user, logout } = useContext(AuthContext); 
+    const pathname = window.location.pathname;
+  
+    const path = pathname === '/' ? 'projects' : pathname.substr(1);
+    const [activeItem, setActiveItem] = useState(path);
+  
+    const handleItemClick = (e, { name }) => setActiveItem(name);
   
       const { children } = props
   
@@ -131,14 +151,61 @@ const DesktopContainer = (props) => {
               vertical
               visible={isSidebar}
             >
-              <Menu.Item as='a' active>
-                Home
-              </Menu.Item>
-              <Menu.Item as='a'>Work</Menu.Item>
-              <Menu.Item as='a'>Company</Menu.Item>
-              <Menu.Item as='a'>Careers</Menu.Item>
-              <Menu.Item as='a'>Log in</Menu.Item>
-              <Menu.Item as='a'>Sign Up</Menu.Item>
+              {user ? 
+                <div>
+                  <Menu.Item
+                    name='projects'
+                    active={activeItem === 'projects'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/'
+                  />
+                  <Menu.Item as='a'>Company</Menu.Item>
+                  <Menu.Item as='a'>Careers</Menu.Item>
+                  <Menu.Item as='a'>Contact</Menu.Item>
+
+                  
+                  <Menu.Menu position='right'>
+                  <Menu.Item
+                    name={user.username}
+                    active={activeItem === 'profile'}
+                    as={Link}
+                    to='/'
+                  />
+                    <Menu.Item
+                      name='logout'
+                      onClick={logout}
+                    />
+                  </Menu.Menu> 
+                  </div>
+                  : 
+                  <div>
+                  <Menu.Item
+                    name='projects'
+                    active={activeItem === 'projects'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/'
+                  > Home </Menu.Item>
+                  <Menu.Item as='a'>Company</Menu.Item>
+                  <Menu.Item as='a'>Careers</Menu.Item>
+                  <Menu.Item as='a'>Contact</Menu.Item>
+                  <Menu.Item
+                    name='login'
+                    active={activeItem === 'login'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/login'
+                  />
+                    <Menu.Item
+                      name='register'
+                      active={activeItem === 'register'}
+                      onClick={handleItemClick}
+                      as={Link}
+                      to='/register'
+                    />                 
+                </div>
+                }
             </Sidebar>
   
             <Sidebar.Pusher dimmed={isSidebar}>
@@ -153,15 +220,23 @@ const DesktopContainer = (props) => {
                     <Menu.Item onClick={handleToggle}>
                       <Icon name='sidebar' />
                     </Menu.Item>
-                    <Menu.Item position='right'>
-                      <Button as='a' inverted>
-                        Log in
-                      </Button>
-                      <Button as='a' inverted style={{ marginLeft: '0.5em' }}>
-                        Sign Up
-                      </Button>
-                    </Menu.Item>
-                  </Menu>
+                    <Menu.Menu position='right'>
+                    <Menu.Item
+                      name='login'
+                      active={activeItem === 'login'}
+                      onClick={handleItemClick}
+                      as={Link}
+                      to='/login'
+                    />
+                      <Menu.Item
+                        name='register'
+                        active={activeItem === 'register'}
+                        onClick={handleItemClick}
+                        as={Link}
+                        to='/register'
+                      />
+                    </Menu.Menu>
+                    </Menu>
                 </Container>
               </Segment>
   
