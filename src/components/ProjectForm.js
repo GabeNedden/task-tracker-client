@@ -4,7 +4,6 @@ import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
 import { useForm } from '../utilities/hooks';
-import { FETCH_PROJECTS_QUERY } from '../utilities/graphql';
 
 function ProjectForm(){
 
@@ -16,14 +15,15 @@ function ProjectForm(){
         variables: values,
         update(proxy, result) {
           const data = proxy.readQuery({
-            query: FETCH_PROJECTS_QUERY,
+            query: FETCH_MY_PROJECTS_QUERY,
           });
           proxy.writeQuery({
-            query: FETCH_PROJECTS_QUERY,
+            query: FETCH_MY_PROJECTS_QUERY,
             data: {
-              getProjects: [result.data.createProject, ...data.getProjects],
+              getMyProjects: [result.data.createProject, ...data.getMyProjects],
             },
           });
+          console.log("hello")
           values.name = "";
         },
         onError(err) {
@@ -73,10 +73,38 @@ const CREATE_PROJECT_MUTATION = gql`
             id
             name
             description
+            status
+            privacy
             createdAt
             username
+            teammembers{
+              id
+              username
+            }
             tasks{
                 id
+            }
+        }
+    }
+`
+
+const FETCH_MY_PROJECTS_QUERY = gql `
+    query{
+        getMyProjects{
+            id
+            name
+            description
+            status
+            privacy
+            createdAt
+            username
+            teammembers{
+                id
+                username
+            }
+            tasks{
+                id
+                name
             }
         }
     }
