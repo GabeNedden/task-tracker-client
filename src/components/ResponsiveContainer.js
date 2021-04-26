@@ -59,8 +59,13 @@ const DesktopContainer = (props) => {
                   />
                   <Menu.Item as='a'>Company</Menu.Item>
                   <Menu.Item as='a'>Careers</Menu.Item>
-                  <Menu.Item as='a'>Contact</Menu.Item>
-
+                  <Menu.Item
+                    name='contact'
+                    active={activeItem === 'contact'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/contact'
+                   />
                   
                   <Menu.Menu position='right'>
                   <Menu.Item
@@ -168,7 +173,13 @@ const DesktopContainer = (props) => {
                   />
                   <Menu.Item as='a'>Company</Menu.Item>
                   <Menu.Item as='a'>Careers</Menu.Item>
-                  <Menu.Item as='a'>Contact</Menu.Item>
+                  <Menu.Item
+                    name='contact'
+                    active={activeItem === 'contact'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/contact'
+                   />
 
                   <Menu.Item
                     name={user.username}
