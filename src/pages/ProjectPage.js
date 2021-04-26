@@ -11,18 +11,14 @@ import TaskModal from '../components/TaskModal';
 
 function ProjectPage(props){
     const projectId = props.match.params.projectId;
+    console.log(projectId)
     const { user } = useContext(AuthContext);
     const taskInputRef = useRef("");
 
     const [task, setTask] = useState('');
 
     const {
-        data: { getProject } = {}
-      } = useQuery(FETCH_PROJECT_QUERY, {
-        variables: {
-          projectId
-        }
-      });
+        data: { getProject } = {} } = useQuery(FETCH_PROJECT_QUERY, { variables: { projectId}});
 
     const [createTask] = useMutation(CREATE_TASK_MUTATION, {
         update(){
@@ -95,9 +91,7 @@ function ProjectPage(props){
                             {tasks.map(task => (
                                 <Card fluid key={task.id}>
                                     <Card.Content>
-
                                         <TaskModal project={getProject} task={task}/>
-
                                         <Card.Header style={{color: "white"}}>{task.name}</Card.Header>
                                     </Card.Content>
                                 </Card>
@@ -173,16 +167,14 @@ const FETCH_PROJECT_QUERY = gql `
             username
             teammembers{
                 id
-                username
+
                 role
             }
             tasks{
                 id
                 name
                 description
-                status
-                createdAt
-                lastInteracted
+
             }
         }
     }

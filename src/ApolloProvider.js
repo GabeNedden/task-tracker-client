@@ -25,10 +25,8 @@ const client = new ApolloClient({
 });
 
 export default (
-    <React.StrictMode>
         <ApolloProvider client={client}>
             <App/>
         </ApolloProvider>
-    </React.StrictMode>
     
 )
