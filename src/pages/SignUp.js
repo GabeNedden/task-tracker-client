@@ -8,7 +8,7 @@ import { AuthContext } from '../context/auth';
 import { useForm } from '../utilities/hooks';
 
 
-const Register = (props) => {
+const SignUp = (props) => {
     const context = useContext(AuthContext);
     const [errors, setErrors] = useState({});
 
@@ -84,7 +84,7 @@ const Register = (props) => {
                         error={errors.confirmPassword ? true : false}
                         onChange={onChange}
                     />
-                    <Button inverted type="submit">Register</Button>
+                    <Button inverted type="submit">Sign Up</Button>
                 </Form>
                 {Object.keys(errors).length > 0 && (
                     <div className="ui error message">
@@ -98,6 +98,7 @@ const Register = (props) => {
             </Grid.Column>
 
             <Grid.Column verticalAlign='middle'>
+                <p>Already have an account?</p>
                 <Button
                     inverted
                     content='Login'
@@ -138,4 +139,4 @@ const REGISTER_USER = gql`
         }
     `
 
-export default Register;
+export default SignUp;

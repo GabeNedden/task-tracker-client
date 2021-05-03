@@ -11,14 +11,12 @@ import TaskModal from '../components/TaskModal';
 
 function ProjectPage(props){
     const projectId = props.match.params.projectId;
-    console.log(projectId)
     const { user } = useContext(AuthContext);
     const taskInputRef = useRef("");
 
     const [task, setTask] = useState('');
 
-    const {
-        data: { getProject } = {} } = useQuery(FETCH_PROJECT_QUERY, { variables: { projectId}});
+    const { data: { getProject } = {} } = useQuery(FETCH_PROJECT_QUERY, { variables: { projectId }});
 
     const [createTask] = useMutation(CREATE_TASK_MUTATION, {
         update(){
@@ -30,6 +28,8 @@ function ProjectPage(props){
             name: task
         }
     })
+
+    console.log(task)
 
     let projectMarkup;
     if(!getProject){
@@ -47,7 +47,7 @@ function ProjectPage(props){
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={10}>
-                        <Card fluid>
+                        <Card className="dark" fluid>
                             <Card.Content>
                                 <Card.Header style={{color: "white"}}>{name}</Card.Header>
                                 <Card.Meta style={{color: "white"}}>Created {moment(createdAt).fromNow()}</Card.Meta>
@@ -62,7 +62,7 @@ function ProjectPage(props){
                             </Card.Content>
                         </Card>
                         {user && user.username === username && (
-                        <Card fluid>
+                        <Card fluid className="dark">
                             <Card.Content>
                             <Form>
                                 <div className="ui action input fluid">
@@ -74,6 +74,7 @@ function ProjectPage(props){
                                         onChange={event => setTask(event.target.value)}
                                         ref={taskInputRef}
                                     />
+                                    {console.log(task)}
                                     <button 
                                         className="ui button grey mini"
                                         disabled={task.trim() === ''}
@@ -89,7 +90,7 @@ function ProjectPage(props){
                         )}
                         <Transition.Group>
                             {tasks.map(task => (
-                                <Card fluid key={task.id}>
+                                <Card className="dark" fluid key={task.id}>
                                     <Card.Content>
                                         <TaskModal project={getProject} task={task}/>
                                         <Card.Header style={{color: "white"}}>{task.name}</Card.Header>
@@ -110,9 +111,9 @@ function ProjectPage(props){
                         </Card>
                         
                         {user && user.username === username && (
-                        <Card fluid>
+                        <Card className="dark" fluid>
                             <Card.Content>
-                                <TeamModal user={user} project={getProject}/>
+                                <TeamModal project={getProject} teammembers={teammembers}/>
                                 <Card.Header style={{color: "white", marginTop: 5}}>Team Members</Card.Header>
                             </Card.Content>
                             <Card.Content>
@@ -167,7 +168,7 @@ const FETCH_PROJECT_QUERY = gql `
             username
             teammembers{
                 id
-
+                username
                 role
             }
             tasks{

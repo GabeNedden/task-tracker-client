@@ -9,7 +9,7 @@ import AuthRoute from './utilities/AuthRoute';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Register from './pages/Register';
+import SignUp from './pages/SignUp';
 import Matrix from './pages/Matrix';
 import ProjectPage from './pages/ProjectPage';
 import ResponsiveContainer from './components/ResponsiveContainer';
@@ -25,7 +25,7 @@ function App() {
           <Switch>
             <Route exact path='/' component={Home}/>
             <AuthRoute exact path='/login' component={Login}/>
-            <AuthRoute exact path='/register' component={Register}/>
+            <AuthRoute exact path='/signup' component={SignUp}/>
             <AuthRoute exact path='/matrix' component={Matrix}/>
             <Route exact path='/contact' component={Contact}/>
             <Route exact path='/project/:projectId' component={ProjectPage}/>

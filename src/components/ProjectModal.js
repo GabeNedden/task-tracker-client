@@ -17,7 +17,6 @@ function ProjectModal(props) {
     const onSubmit = (event) => {
             event.preventDefault();
             updateProject();
-            console.log(values)
         }
     const [updateProject] = useMutation(UPDATE_PROJECT_MUTATION, {
         variables: {

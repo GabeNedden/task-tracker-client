@@ -77,13 +77,14 @@ const Login = (props) => {
             </Grid.Column>
 
             <Grid.Column verticalAlign='middle'>
+                <p>Don't have an account?</p>
                 <Button
                     inverted
                     content='Sign up'
                     icon='signup'
                     size='big'
                     as={Link}
-                    to='/register' />
+                    to='/signup' />
             </Grid.Column>
             </Grid>
 

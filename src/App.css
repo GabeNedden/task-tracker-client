@@ -22,6 +22,10 @@ div.ui.centered.card {
   background-color: rgb(39, 39, 39);
 }
 
-div.ui.fluid.card {
-  background-color: rgb(39, 39, 39);
+.dark {
+  background-color: rgb(39, 39, 39) !important;
+}
+
+.hidden {
+  display: none;
 }

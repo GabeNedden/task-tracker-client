@@ -38,7 +38,7 @@ function Home() {
                         <ProjectForm />
                     </Grid.Column>
                 )}
-            {loading ? (
+            {loading && user ? (
                 <div>
                 <Segment>
                   <Dimmer active>

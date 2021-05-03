@@ -112,11 +112,11 @@ const DesktopContainer = (props) => {
                       inverted={!isFixed}
                     />
                       <Menu.Item
-                        name='register'
-                        active={activeItem === 'register'}
+                        name='sign up'
+                        active={activeItem === 'sign up'}
                         onClick={handleItemClick}
                         as={Link}
-                        to='/register'
+                        to='/signup'
                         inverted={!isFixed}
                         primary={isFixed}
                       />
@@ -218,11 +218,11 @@ const DesktopContainer = (props) => {
                     to='/login'
                   />
                     <Menu.Item
-                      name='register'
-                      active={activeItem === 'register'}
+                      name='sign up'
+                      active={activeItem === 'sign up'}
                       onClick={handleItemClick}
                       as={Link}
-                      to='/register'
+                      to='/signup'
                     />                 
                 </div>
                 }
@@ -264,11 +264,11 @@ const DesktopContainer = (props) => {
                       to='/login'
                     />
                       <Menu.Item
-                        name='register'
-                        active={activeItem === 'register'}
+                        name='sign up'
+                        active={activeItem === 'sign up'}
                         onClick={handleItemClick}
                         as={Link}
-                        to='/register'
+                        to='/signup'
                       />
                     </Menu.Menu>
                     )}
