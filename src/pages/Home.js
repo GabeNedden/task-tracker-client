@@ -13,7 +13,6 @@ function Home() {
     
     return (
         <Segment
-              inverted
               textAlign='center'
               style={{ minHeight: 400, padding: '1em 0em' }}
               vertical

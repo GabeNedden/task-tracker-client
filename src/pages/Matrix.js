@@ -13,7 +13,6 @@ const Matrix = () => {
                 content='The story ends. You wake up in your bed and believe whatever you want to believe.'
                 position='top center'
                 size='medium'
-                inverted
               />
             </Grid.Column>
             
@@ -23,7 +22,6 @@ const Matrix = () => {
                 content='Stay in Wonderland, and I show you how deep the rabbit hole goes.'
                 position='top center'
                 size='medium'
-                inverted
               />
             </Grid.Column>
           </Grid>

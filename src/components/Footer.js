@@ -5,26 +5,26 @@ import { Container, Header, Grid, List, Segment } from 'semantic-ui-react';
 
 function Footer() {
     return (
-        <Segment inverted vertical style={{ padding: '5em 0em' }}>
+        <Segment vertical style={{ padding: '5em 0em' }}>
       <Container>
-        <Grid divided inverted stackable>
+        <Grid divided stackable>
           <Grid.Row>
             <Grid.Column width={3}>
-              <Header inverted as='h4' content='About' />
-              <List link inverted>
+              <Header as='h4' content='About' />
+              <List link>
                 <List.Item as='a'>Sitemap</List.Item>
                 <List.Item as='a'>Contact Us</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={3}>
-              <Header inverted as='h4' content='Services' />
-              <List link inverted>
+              <Header as='h4' content='Services' />
+              <List link>
                 <List.Item as='a'>How To Access</List.Item>
                 <List.Item as='a'>Favorite Movies</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={7}>
-              <Header as='h4' inverted>
+              <Header as='h4'>
                 Footer Header
               </Header>
               <p>

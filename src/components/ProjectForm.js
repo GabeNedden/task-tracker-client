@@ -38,7 +38,7 @@ function ProjectForm(){
     return (
         <Card centered style={{height: 160}}>
     <Card.Content>
-      <Card.Header style={{color: "white"}}>Start a new project</Card.Header>
+      <Card.Header>Start a new project</Card.Header>
     </Card.Content>
     <Card.Content extra>
     <Form onSubmit={onSubmit}>

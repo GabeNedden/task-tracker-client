@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function NotFound() {
     return (
-        <Segment inverted vertical style={{ minHeight: 400, padding: '1em 0em' }}>
+        <Segment vertical style={{ minHeight: 400, padding: '1em 0em' }}>
             <Grid stackable centered>
                 <Grid.Row className="page-title">
                     <h1>404 : Page Not Found</h1>

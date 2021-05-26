@@ -39,7 +39,6 @@ function ProjectPage(props){
 
         projectMarkup = (
             <Segment
-              inverted
               style={{ minHeight: 100, padding: '1em 0em' }}
               vertical
             >

@@ -37,13 +37,12 @@ const DesktopContainer = (props) => {
             onBottomPassedReverse={hideFixedMenu}
           >
             <Segment
-              inverted
+              
               style={{ minHeight: 10, padding: '1em 0em' }}
               vertical
             >
               <Menu
                 fixed={isFixed ? 'top' : null}
-                inverted={!isFixed}
                 pointing={!isFixed}
                 secondary={!isFixed}
                 size='large'
@@ -73,12 +72,11 @@ const DesktopContainer = (props) => {
                     active={activeItem === 'profile'}
                     as={Link}
                     to='/'
-                    inverted={!isFixed}
                   />
                     <Menu.Item
                       name='logout'
                       onClick={logout}
-                      inverted={!isFixed}
+
                       primary={!isFixed}
                     />
                   </Menu.Menu> 
@@ -109,7 +107,7 @@ const DesktopContainer = (props) => {
                       onClick={handleItemClick}
                       as={Link}
                       to='/login'
-                      inverted={!isFixed}
+
                     />
                       <Menu.Item
                         name='sign up'
@@ -117,7 +115,7 @@ const DesktopContainer = (props) => {
                         onClick={handleItemClick}
                         as={Link}
                         to='/signup'
-                        inverted={!isFixed}
+  
                         primary={isFixed}
                       />
                     </Menu.Menu>                  
@@ -157,7 +155,6 @@ const DesktopContainer = (props) => {
             <Sidebar
               as={Menu}
               animation='overlay'
-              inverted
               onHide={handleSidebarHide}
               vertical
               visible={isSidebar}
@@ -230,13 +227,13 @@ const DesktopContainer = (props) => {
   
             <Sidebar.Pusher dimmed={isSidebar}>
               <Segment
-                inverted
+
                 textAlign='center'
                 style={{ minHeight: 10, padding: '1em 0em' }}
                 vertical
               >
                 <Container>
-                  <Menu inverted pointing secondary size='large'>
+                  <Menu pointing secondary size='large'>
                     <Menu.Item onClick={handleToggle}>
                       <Icon name='sidebar' />
                     </Menu.Item>

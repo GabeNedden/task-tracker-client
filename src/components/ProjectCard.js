@@ -9,9 +9,9 @@ function ProjectCard({ project: { name, description, tasks, createdAt, id, usern
     return (
         <Card centered style={{height: 160}}>
     <Card.Content>
-      <Card.Header style={{color: "white"}} as={Link} to={`/project/${id}`}>{name}</Card.Header>
-    <Card.Meta style={{color: "white"}} as='div'>{moment(createdAt).fromNow()}</Card.Meta>
-      <Card.Description style={{color: "white"}}>{description}</Card.Description>
+      <Card.Header as={Link} to={`/project/${id}`}>{name}</Card.Header>
+    <Card.Meta as='div'>{moment(createdAt).fromNow()}</Card.Meta>
+      <Card.Description>{description}</Card.Description>
     </Card.Content>
     <Card.Content extra>
     <Button as={Link} to={`/project/${id}`} labelPosition='right'>

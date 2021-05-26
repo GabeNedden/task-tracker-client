@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { Button, Card, Feed, Form, Grid, Icon, Image, Modal } from 'semantic-ui-react';
+import { Button, Card, Dropdown, Feed, Form, Grid, Icon, Image, Modal } from 'semantic-ui-react';
 
 function TeamModal(props) {
 
@@ -59,6 +59,13 @@ function TeamModal(props) {
             <Grid.Column width={8}>
               <Form onSubmit={onSubmit}>
                 <Form.Field>
+                    <Dropdown 
+                      placeholder="Search Users"
+                      fluid
+                      search
+                      selection
+                      options={getUsers}
+                    />
                     <Form.Input 
                         loading={loading === true}
                         size="big"
@@ -99,7 +106,9 @@ function TeamModal(props) {
                       color='green'>
                       Approve
                     </Button>
-                    <Button basic color='red'>
+                    <Button
+                      basic
+                      color='red'>
                       Decline
                     </Button>
                   </div>

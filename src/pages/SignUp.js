@@ -35,19 +35,17 @@ const SignUp = (props) => {
     }
 
     return (
-        <Segment
-              inverted
-              
+        <Segment              
               textAlign='center'
               style={{ minHeight: 100, padding: '1em 0em' }}
               vertical
             >
         <Container>
-        <Segment inverted placeholder style={{marginTop: 50, height: 380}}>
+        <Segment placeholder style={{marginTop: 50, height: 380}}>
             <Grid columns={2} relaxed='very' stackable>
     
             <Grid.Column>
-                <Form inverted onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
+                <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
                     <Form.Input
                         label="Username"
                         placeholder="Username"
@@ -84,7 +82,7 @@ const SignUp = (props) => {
                         error={errors.confirmPassword ? true : false}
                         onChange={onChange}
                     />
-                    <Button inverted type="submit">Sign Up</Button>
+                    <Button type="submit">Sign Up</Button>
                 </Form>
                 {Object.keys(errors).length > 0 && (
                     <div className="ui error message">
@@ -100,7 +98,6 @@ const SignUp = (props) => {
             <Grid.Column verticalAlign='middle'>
                 <p>Already have an account?</p>
                 <Button
-                    inverted
                     content='Login'
                     icon='bicycle'
                     size='big'
