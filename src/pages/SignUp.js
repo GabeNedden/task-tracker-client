@@ -45,7 +45,7 @@ const SignUp = (props) => {
             <Grid columns={2} relaxed='very' stackable>
     
             <Grid.Column>
-                <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
+                <Form onSubmit={onSubmit} inverted noValidate className={loading ? 'loading' : ''}>
                     <Form.Input
                         label="Username"
                         placeholder="Username"

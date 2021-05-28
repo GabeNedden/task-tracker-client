@@ -71,7 +71,7 @@ const DesktopContainer = (props) => {
                     name={user.username}
                     active={activeItem === 'profile'}
                     as={Link}
-                    to='/'
+                    to={`/myaccount/${user.id}`}
                   />
                     <Menu.Item
                       name='logout'
@@ -182,7 +182,7 @@ const DesktopContainer = (props) => {
                     name={user.username}
                     active={activeItem === 'profile'}
                     as={Link}
-                    to='/'
+                    to={`/myaccount/${user.id}`}
                   />
                     <Menu.Item
                       name='logout'
@@ -244,7 +244,7 @@ const DesktopContainer = (props) => {
                     name={user.username}
                     active={activeItem === 'profile'}
                     as={Link}
-                    to='/'
+                    to={`/myaccount/${user.id}`}
                   />
                     <Menu.Item
                       name='logout'

@@ -12,16 +12,11 @@ function Home() {
     const { loading, data: { getMyProjects: projects } = {} } = useQuery(FETCH_MY_PROJECTS_QUERY);
     
     return (
-        <Segment
-              textAlign='center'
-              style={{ minHeight: 400, padding: '1em 0em' }}
-              vertical
-            >
         <Grid stackable centered>
             <Grid.Row className="page-title">
                 {user ? (
                     <>
-                        <h1>Projects</h1>
+                        <h1>Jump back in into a Project</h1>
                         <p></p>
                     </> 
                     ) : (
@@ -40,7 +35,7 @@ function Home() {
             {loading && user ? (
                 <div>
                 <Segment>
-                  <Dimmer active>
+                  <Dimmer inverted active>
                     <Loader indeterminate>Connecting to Database</Loader>
                   </Dimmer>
             
@@ -49,7 +44,7 @@ function Home() {
               </div>
             ) : (
                 <Transition.Group>
-                    {projects && projects.map(project => (
+                    {projects && projects.filter(project => project.status === "Open").map(project => (
                     <Grid.Column width={3} key={project.id} style={{ marginBottom: 30 }}>
                         <ProjectCard project={project}/>
                     </Grid.Column>
@@ -58,8 +53,28 @@ function Home() {
             )}
 
             </Grid.Row>
+
+
+            <Grid.Row className="page-title">
+                {user && (
+                    <>
+                        <h1>Revisit Completed Projects</h1>
+                        <p></p>
+                    </> 
+                    )}
+            </Grid.Row>
+
+            <Grid.Row>
+                <Transition.Group>
+                    {projects && projects.filter(project => project.status === "Complete").map(project => (
+                    <Grid.Column width={3} key={project.id} style={{ marginBottom: 30 }}>
+                        <ProjectCard project={project}/>
+                    </Grid.Column>
+                ))}
+                </Transition.Group>
+            </Grid.Row>
+
         </Grid>
-        </Segment>
     );
 };
 

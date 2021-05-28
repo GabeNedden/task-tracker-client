@@ -23,7 +23,6 @@ function ProjectForm(){
               getMyProjects: [result.data.createProject, ...data.getMyProjects],
             },
           });
-          console.log("hello")
           values.name = "";
         },
         onError(err) {

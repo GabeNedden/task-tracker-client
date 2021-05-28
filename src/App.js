@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Matrix from './pages/Matrix';
 import ProjectPage from './pages/ProjectPage';
+import Account from './pages/Account';
 import ResponsiveContainer from './components/ResponsiveContainer';
 import NotFound from './components/NotFound';
 import Contact from './components/Contact';
@@ -29,6 +30,7 @@ function App() {
             <Route exact path='/matrix' component={Matrix}/>
             <Route exact path='/contact' component={Contact}/>
             <Route exact path='/project/:projectId' component={ProjectPage}/>
+            <Route exact path='/myaccount/:userId' component={Account}/>
             <Route exact path='*' component={NotFound} />
           </Switch>
         </ResponsiveContainer>

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useRef } from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Card, Container, Feed, Form, Grid, Image, Segment, Transition } from 'semantic-ui-react';
+import { Card, Container, Feed, Form, Grid, Image, Transition } from 'semantic-ui-react';
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import ToggleButton from '../components/ToggleButton';
@@ -29,8 +29,6 @@ function ProjectPage(props){
         }
     })
 
-    console.log(task)
-
     let projectMarkup;
     if(!getProject){
         projectMarkup = <p>Loading Project</p>
@@ -38,19 +36,15 @@ function ProjectPage(props){
         const { name, description, username, tasks, teammembers, createdAt } = getProject;
 
         projectMarkup = (
-            <Segment
-              style={{ minHeight: 100, padding: '1em 0em' }}
-              vertical
-            >
             <Container>
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={10}>
-                        <Card className="dark" fluid>
+                        <Card fluid>
                             <Card.Content>
-                                <Card.Header style={{color: "white"}}>{name}</Card.Header>
-                                <Card.Meta style={{color: "white"}}>Created {moment(createdAt).fromNow()}</Card.Meta>
-                                <Card.Description style={{color: "white"}} floated='left'>{description}</Card.Description>
+                                <Card.Header>{name}</Card.Header>
+                                <Card.Meta>Created {moment(createdAt).fromNow()}</Card.Meta>
+                                <Card.Description floated='left'>{description}</Card.Description>
                                 
                                 {user && user.username === username && (
                                     <>
@@ -61,7 +55,7 @@ function ProjectPage(props){
                             </Card.Content>
                         </Card>
                         {user && user.username === username && (
-                        <Card fluid className="dark">
+                        <Card fluid>
                             <Card.Content>
                             <Form>
                                 <div className="ui action input fluid">
@@ -89,10 +83,10 @@ function ProjectPage(props){
                         )}
                         <Transition.Group>
                             {tasks.map(task => (
-                                <Card className="dark" fluid key={task.id}>
+                                <Card fluid key={task.id}>
                                     <Card.Content>
                                         <TaskModal project={getProject} task={task}/>
-                                        <Card.Header style={{color: "white"}}>{task.name}</Card.Header>
+                                        <Card.Header>{task.name}</Card.Header>
                                     </Card.Content>
                                 </Card>
                             ))}
@@ -110,7 +104,7 @@ function ProjectPage(props){
                         </Card>
                         
                         {user && user.username === username && (
-                        <Card className="dark" fluid>
+                        <Card fluid>
                             <Card.Content>
                                 <TeamModal project={getProject} teammembers={teammembers}/>
                                 <Card.Header style={{color: "white", marginTop: 5}}>Team Members</Card.Header>
@@ -134,7 +128,6 @@ function ProjectPage(props){
                 </Grid.Row>
             </Grid>
             </Container>
-            </Segment>
         )
     }
     return projectMarkup;
