@@ -1,18 +1,13 @@
-import React, { useContext, useState, useRef } from 'react';
-import gql from 'graphql-tag';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Card, Container, Feed, Form, Grid, Image, Transition } from 'semantic-ui-react';
-import moment from 'moment';
+import React, { useContext } from 'react';
+// import gql from 'graphql-tag';
+// import { useQuery } from '@apollo/react-hooks';
+import { Grid } from 'semantic-ui-react';
 import { AuthContext } from '../context/auth';
-import ToggleButton from '../components/ToggleButton';
-import TeamModal from '../components/TeamModal';
-import ProjectModal from '../components/ProjectModal';
-import TaskModal from '../components/TaskModal';
 
 function Account(props) {
     const { user } = useContext(AuthContext)
     const userId = props.match.params.userId;
-    const { loading, data: { getMyProjects: projects } = {} } = useQuery(FETCH_MY_PROJECTS_QUERY);
+    // const { loading, data: { getMyProjects: projects } = {} } = useQuery(FETCH_MY_PROJECTS_QUERY);
 
     return (
         <Grid stackable centered>
@@ -33,26 +28,26 @@ function Account(props) {
     )
 }
 
-const FETCH_MY_PROJECTS_QUERY = gql `
-    query{
-        getMyProjects{
-            id
-            name
-            description
-            status
-            privacy
-            createdAt
-            username
-            teammembers{
-                id
-                username
-            }
-            tasks{
-                id
-                name
-            }
-        }
-    }
-`
+// const FETCH_MY_PROJECTS_QUERY = gql `
+//     query{
+//         getMyProjects{
+//             id
+//             name
+//             description
+//             status
+//             privacy
+//             createdAt
+//             username
+//             teammembers{
+//                 id
+//                 username
+//             }
+//             tasks{
+//                 id
+//                 name
+//             }
+//         }
+//     }
+// `
 
 export default Account;
