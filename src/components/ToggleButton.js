@@ -18,12 +18,12 @@ function ToggleButton({ user, project: { id, status } }){
 
     const completeButton = user &&
         open ? (
-            <Button floated='right' style={{marginTop: 10}} size="mini" color="grey" onClick={completeProject}>
-                Complete Project
+            <Button floated='right' size="mini" color="grey" onClick={completeProject}>
+                Complete
             </Button>
         ) : (
-            <Button floated='right' style={{marginTop: 10}} size="mini" color="grey" onClick={completeProject} basic>
-                Re-Open Project
+            <Button floated='right' size="mini" color="grey" onClick={completeProject} basic>
+                Re-Open
             </Button>
         )
 

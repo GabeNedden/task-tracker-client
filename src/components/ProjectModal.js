@@ -3,6 +3,8 @@ import { Button, Form, Header, Image, Modal } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
+import ToggleButton from '../components/ToggleButton';
+
 function ProjectModal(props) {
 
   const initialState = {
@@ -17,6 +19,7 @@ function ProjectModal(props) {
     const onSubmit = (event) => {
             event.preventDefault();
             updateProject();
+            setFirstOpen(false);
         }
     const [updateProject] = useMutation(UPDATE_PROJECT_MUTATION, {
         variables: {
@@ -58,9 +61,11 @@ function ProjectModal(props) {
                             onChange={onChange}
                             value={values.description}
                             />
-                        <Button size="mini" type="submit" color="grey">
+                        <ToggleButton user={props.user} project={props.project} />
+                        <Button floated="left" size="mini" type="submit" color="grey">
                             Update
                         </Button>
+                        
                     </Form.Field>
                 </Form>
             </Modal.Description>
