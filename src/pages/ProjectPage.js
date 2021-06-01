@@ -82,7 +82,7 @@ function ProjectPage(props){
                             animated
                             relaxed='very'
                             divided
-                            size='huge'
+                            size='large'
                             verticalAlign='middle'
                             >
                             {tasks.map(task => (
@@ -169,6 +169,7 @@ const FETCH_PROJECT_QUERY = gql `
                 id
                 name
                 description
+                status
 
             }
         }

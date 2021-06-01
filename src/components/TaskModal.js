@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Button, Form, Header, Modal } from 'semantic-ui-react';
+import { Button, Form, Modal, Radio } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
 function TaskModal(props) {
 
-  const initialState = {
+    const [value, setValue] = useState(props.task.status);
+    const handleChange = (event, {value}) => setValue(value);
+
+    const initialState = {
         projectId: props.project.id,
         taskId: props.task.id,
         name: props.task.name,
@@ -14,12 +17,15 @@ function TaskModal(props) {
     }
 
     const [values, setValues] = useState(initialState);
+    
     const onChange = (event) => {
             setValues({...values, [event.target.name]: event.target.value});
         };
+
     const onSubmit = (event) => {
             event.preventDefault();
             updateTask();
+            setFirstOpen(false)
         }
     const [updateTask] = useMutation(UPDATE_TASK_MUTATION, {
         variables: {
@@ -27,7 +33,7 @@ function TaskModal(props) {
             taskId: values.taskId,
             name: values.name,
             description: values.description,
-            status: values.status
+            status: value
         }
       });
 
@@ -46,23 +52,53 @@ function TaskModal(props) {
         <Modal.Header>Edit your Task Details</Modal.Header>
         <Modal.Content image>
             <Modal.Description>
-                <Header>Task</Header>
                 <Form onSubmit={onSubmit}>
                     <Form.Field>
                         <Form.Input 
                             size="big"
-                            placeholder="Project Name"
+                            placeholder="Task Name"
                             name="name"
                             onChange={onChange}
                             value={values.name}
                             />
-                        <Form.Input
-                            placeholder="Project Description"
+                        <Form.TextArea
+                            placeholder="Task Description"
                             name="description"
                             onChange={onChange}
                             value={values.description}
                             />
-                        <Button size="mini" type="submit" color="grey">
+                        <Form.Field>
+                            Status: <b>{value}</b>
+                        </Form.Field>
+                        <Form.Field>
+                            <Radio
+                                label='Open'
+                                name='radioGroup'
+                                value='Open'
+                                checked={value === 'Open'}
+                                onChange={handleChange}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <Radio
+                                label='In Progress'
+                                name='radioGroup'
+                                value='In Progress'
+                                checked={value === 'In Progress'}
+                                onChange={handleChange}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <Radio
+                                label='Complete'
+                                name='radioGroup'
+                                value='Complete'
+                                checked={value === 'Complete'}
+                                onChange={handleChange}
+                            />
+                        </Form.Field>
+
+                        <Button style={{marginTop: 10}} size="mini" type="submit" color="grey">
                             Update
                         </Button>
                     </Form.Field>
@@ -82,6 +118,8 @@ const UPDATE_TASK_MUTATION = gql`
             tasks{
                 id
                 name
+                description
+                status
             }
         }
     }
