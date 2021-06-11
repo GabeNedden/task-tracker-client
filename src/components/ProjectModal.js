@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Header, Image, Modal } from 'semantic-ui-react';
+import { Button, Container, Form, Grid, Image, Modal, Radio } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -10,7 +10,8 @@ function ProjectModal(props) {
   const initialState = {
         projectId: props.project.id,
         name: props.project.name,
-        description: props.project.description
+        description: props.project.description,
+        privacy: props.project.privacy
     }
     const [values, setValues] = useState(initialState);
     const onChange = (event) => {
@@ -29,6 +30,12 @@ function ProjectModal(props) {
         }
       });
 
+      const [togglePrivacy] = useMutation(TOGGLE_PRIVACY_MUTATION, {
+        variables: {
+            projectId: values.projectId
+        }
+      });
+
   const [firstOpen, setFirstOpen] = React.useState(false)
 
   return (
@@ -41,34 +48,53 @@ function ProjectModal(props) {
         open={firstOpen}
         size='small'
       >
-        <Modal.Header>Edit your project name or description</Modal.Header>
-        <Modal.Content image>
-            <Image size='medium' src='https://ic.pics.livejournal.com/z3000/8983861/2025363/2025363_original.jpg' wrapped />
-            <Modal.Description>
-                <Header>Current Project Nameeeeeeeeeeeeee</Header>
-                <Form onSubmit={onSubmit}>
-                    <Form.Field>
-                        <Form.Input 
-                            size="big"
-                            placeholder="Project Name"
-                            name="name"
-                            onChange={onChange}
-                            value={values.name}
-                            />
-                        <Form.Input
-                            placeholder="Project Description"
-                            name="description"
-                            onChange={onChange}
-                            value={values.description}
-                            />
-                        <ToggleButton user={props.user} project={props.project} />
-                        <Button floated="left" size="mini" type="submit" color="grey">
-                            Update
-                        </Button>
-                        
-                    </Form.Field>
-                </Form>
-            </Modal.Description>
+        <Modal.Header>Modify project settings</Modal.Header>
+        <Modal.Content >
+            <Container>
+                <Grid stackable>
+                    <Grid.Row>
+                        <Grid.Column width={6}>
+                            <Image size='medium' src='https://ic.pics.livejournal.com/z3000/8983861/2025363/2025363_original.jpg' wrapped />
+                        </Grid.Column>
+
+                        <Grid.Column width={10}>
+                            <Form float="right" onSubmit={onSubmit}>
+                                <Form.Field>
+                                    <Form.Input
+                                        size="big"
+                                        placeholder="Project Name"
+                                        name="name"
+                                        onChange={onChange}
+                                        value={values.name}
+                                        />
+                                    <Form.Input
+                                        placeholder="Project Description"
+                                        name="description"
+                                        onChange={onChange}
+                                        value={values.description}
+                                        />
+                                    <Form.Field>
+                                        <Radio
+                                            label='Allow Teammembers'
+                                            toggle
+                                            name='radioGroup'
+                                            value={values.privacy}
+                                            checked={values.privacy === 'On'}
+                                            onChange={togglePrivacy}
+                                            style={{marginBottom: 15}}
+                                        />
+                                    </Form.Field>
+                                    <ToggleButton user={props.user} project={props.project} />
+                                    <Button floated="left" size="mini" type="submit" color="grey">
+                                        Update
+                                    </Button>
+                                    
+                                </Form.Field>
+                            </Form>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </Container>
         </Modal.Content>
       </Modal>
     </>
@@ -81,6 +107,16 @@ const UPDATE_PROJECT_MUTATION = gql`
             id
             name
             description
+        }
+    }
+`
+
+const TOGGLE_PRIVACY_MUTATION = gql`
+    mutation togglePrivacy($projectId: ID!){
+        togglePrivacy(projectId: $projectId){
+            id
+            name
+            privacy
         }
     }
 `

@@ -32,7 +32,8 @@ function ProjectPage(props){
     if(!getProject){
         projectMarkup = <p>Loading Project</p>
     } else {
-        const { name, description, status, username, tasks, teammembers, createdAt } = getProject;
+        const { name, description, status, username, privacy, tasks, teammembers, createdAt } = getProject;
+
 
         projectMarkup = (
             <Container>
@@ -76,6 +77,7 @@ function ProjectPage(props){
                             </Form>
                         </>
                         )}
+                        <Header>Unassigned Tasks</Header>
                         <Transition.Group
                             as={List}
                             duration={200}
@@ -85,7 +87,28 @@ function ProjectPage(props){
                             size='large'
                             verticalAlign='middle'
                             >
-                            {tasks.map(task => (
+                            {tasks.filter(task => task.status !== "Complete").map(task => (
+                                <List.Item key={task.id}>
+                                <Image avatar src={'https://react.semantic-ui.com/images/avatar/small/christian.jpg'} />
+                                <List.Content header={task.name} />
+                                <TaskModal project={getProject} task={task}/>
+                              </List.Item>
+                            ))}
+                        </Transition.Group>
+
+                        {tasks.filter(task => task.status === "Complete").length > 0 && (
+                            <Header>Completed Tasks</Header>
+                        )}
+                        <Transition.Group
+                            as={List}
+                            duration={200}
+                            animated
+                            relaxed='very'
+                            divided
+                            size='large'
+                            verticalAlign='middle'
+                            >
+                            {tasks.filter(task => task.status === "Complete").map(task => (
                                 <List.Item key={task.id}>
                                 <Image avatar src={'https://react.semantic-ui.com/images/avatar/small/christian.jpg'} />
                                 <List.Content header={task.name} />
@@ -105,11 +128,11 @@ function ProjectPage(props){
                             />
                         </Card>
                         
-                        {user && user.username === username && (
+                        {user && privacy === "Off" && (
                         <Card fluid>
                             <Card.Content>
                                 <TeamModal project={getProject} teammembers={teammembers}/>
-                                <Card.Header style={{color: "white", marginTop: 5}}>Team Members</Card.Header>
+                                <Card.Header style={{marginTop: 5}}>Team Members</Card.Header>
                             </Card.Content>
                             <Card.Content>
                                 <Feed>
