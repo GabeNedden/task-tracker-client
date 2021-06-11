@@ -43,7 +43,7 @@ function Home() {
                 </Segment>
               </div>
             ) : (
-                <Transition.Group>
+                <Transition.Group animation="fly up" duration={800}>
                     {projects && projects.filter(project => project.status === "Open").map(project => (
                     <Grid.Column width={3} key={project.id} style={{ marginBottom: 30 }}>
                         <ProjectCard project={project}/>

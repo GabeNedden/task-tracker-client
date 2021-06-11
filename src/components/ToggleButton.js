@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {Button} from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
 
 function ToggleButton({ user, project: { id, status } }){
     const [open, setOpen] = useState(true);
@@ -18,7 +19,7 @@ function ToggleButton({ user, project: { id, status } }){
 
     const completeButton = user &&
         open ? (
-            <Button floated='right' size="mini" color="grey" onClick={completeProject}>
+            <Button as={Link} to='/' floated='right' size="mini" color="grey" onClick={completeProject}>
                 Complete
             </Button>
         ) : (

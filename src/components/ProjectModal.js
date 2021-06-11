@@ -75,11 +75,10 @@ function ProjectModal(props) {
                                         />
                                     <Form.Field>
                                         <Radio
-                                            label='Allow Teammembers'
+                                            label="Allow Teammembers?"
                                             toggle
                                             name='radioGroup'
                                             value={values.privacy}
-                                            checked={values.privacy === 'On'}
                                             onChange={togglePrivacy}
                                             style={{marginBottom: 15}}
                                         />
@@ -107,6 +106,7 @@ const UPDATE_PROJECT_MUTATION = gql`
             id
             name
             description
+            privacy
         }
     }
 `
