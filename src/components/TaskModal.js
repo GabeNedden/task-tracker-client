@@ -37,6 +37,13 @@ function TaskModal(props) {
         }
       });
 
+      const [deleteTask] = useMutation(DELETE_TASK_MUTATION, {
+        variables: {
+            projectId: values.projectId,
+            taskId: values.taskId
+        }
+      });
+
   const [firstOpen, setFirstOpen] = React.useState(false)
 
   return (
@@ -52,7 +59,7 @@ function TaskModal(props) {
         <Modal.Header>Edit your Task Details</Modal.Header>
         <Modal.Content image>
             <Modal.Description>
-                <Form onSubmit={onSubmit}>
+                <Form>
                     <Form.Field>
                         <Form.Input 
                             size="big"
@@ -98,8 +105,22 @@ function TaskModal(props) {
                             />
                         </Form.Field>
 
-                        <Button style={{marginTop: 10}} size="mini" type="submit" color="grey">
+                        <Button
+                            style={{marginTop: 10}}
+                            size="mini"
+                            type="submit"
+                            color="grey"
+                            onClick={onSubmit}
+                            >
                             Update
+                        </Button>
+                        <Button 
+                            style={{marginTop: 10}}
+                            negative floated="right"
+                            size="mini"
+                            onClick={deleteTask}
+                        >
+                            Delete
                         </Button>
                     </Form.Field>
                 </Form>
@@ -125,5 +146,19 @@ const UPDATE_TASK_MUTATION = gql`
     }
 `
 
+const DELETE_TASK_MUTATION = gql`
+    mutation deleteTask($projectId: ID!, $taskId: ID!){
+        deleteTask(projectId: $projectId, taskId: $taskId){
+            id
+            name
+            tasks{
+                id
+                name
+                description
+                status
+            }
+        }
+    }
+`
 
 export default TaskModal;
