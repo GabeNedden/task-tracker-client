@@ -166,6 +166,7 @@ const CREATE_TASK_MUTATION = gql `
                 id
                 name
                 description
+                status
                 createdAt
                 username
             }
