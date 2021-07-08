@@ -68,9 +68,9 @@ const DesktopContainer = (props) => {
                   <Menu.Menu position='right'>
                   <Menu.Item
                     name={user.username}
-                    active={activeItem === 'profile'}
+                    active={activeItem === `/myaccount/${user.id}`}
                     as={Link}
-                    to={'profile'}
+                    to={`/myaccount/${user.id}`}
                   />
                     <Menu.Item
                       name='logout'
