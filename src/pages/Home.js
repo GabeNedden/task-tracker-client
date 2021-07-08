@@ -27,11 +27,11 @@ function Home() {
                     )}
             </Grid.Row>
             <Grid.Row>
-                {user && (
-                    <Grid.Column width={3}>
+                <Grid.Column width={3}>
+                    {user && (
                         <ProjectForm />
-                    </Grid.Column>
-                )}
+                    )}
+                </Grid.Column>
             {loading && user ? (
                 <div>
                 <Segment>

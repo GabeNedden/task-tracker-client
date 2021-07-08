@@ -37,7 +37,6 @@ const DesktopContainer = (props) => {
             onBottomPassedReverse={hideFixedMenu}
           >
             <Segment
-              
               style={{ minHeight: 10, padding: '1em 0em' }}
               vertical
             >
@@ -71,12 +70,11 @@ const DesktopContainer = (props) => {
                     name={user.username}
                     active={activeItem === 'profile'}
                     as={Link}
-                    to={`/myaccount/${user.id}`}
+                    to={'profile'}
                   />
                     <Menu.Item
                       name='logout'
                       onClick={logout}
-
                       primary={!isFixed}
                     />
                   </Menu.Menu> 

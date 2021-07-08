@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
-// import gql from 'graphql-tag';
-// import { useQuery } from '@apollo/react-hooks';
-import { Grid } from 'semantic-ui-react';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+import { Dimmer, Grid, Image, Loader, Segment, Transition } from 'semantic-ui-react';
 import { AuthContext } from '../context/auth';
+import ProjectCard from '../components/ProjectCard';
 
 function Account(props) {
     const { user } = useContext(AuthContext)
     const userId = props.match.params.userId;
-    // const { loading, data: { getMyProjects: projects } = {} } = useQuery(FETCH_MY_PROJECTS_QUERY);
+    const { loading, data: { getMyProjects: projects } = {} } = useQuery(FETCH_MY_PROJECTS_QUERY);
 
     return (
         <Grid stackable centered>
@@ -15,7 +16,7 @@ function Account(props) {
                 {user.id === userId ? (
                     <>
                         <h1>Hello {user.username}</h1>
-                        <p>{userId}</p>
+                        <p>Archived Projects</p>
                     </> 
                     ) : (
                         <>
@@ -24,30 +25,54 @@ function Account(props) {
                     </> 
                     )}
             </Grid.Row>
+
+            <Grid.Row>
+            {loading && user ? (
+                <div>
+                <Segment>
+                  <Dimmer inverted active>
+                    <Loader indeterminate>Connecting to Database</Loader>
+                  </Dimmer>
+            
+                  <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+                </Segment>
+              </div>
+            ) : (
+                <Transition.Group animation="fly up" duration={800}>
+                    {projects && projects.filter(project => project.status === "Archived").map(project => (
+                    <Grid.Column width={3} key={project.id} style={{ marginBottom: 30 }}>
+                        <ProjectCard project={project}/>
+                    </Grid.Column>
+                ))}
+                </Transition.Group>
+            )}
+
+            </Grid.Row>
+
         </Grid>
     )
 }
 
-// const FETCH_MY_PROJECTS_QUERY = gql `
-//     query{
-//         getMyProjects{
-//             id
-//             name
-//             description
-//             status
-//             privacy
-//             createdAt
-//             username
-//             teammembers{
-//                 id
-//                 username
-//             }
-//             tasks{
-//                 id
-//                 name
-//             }
-//         }
-//     }
-// `
+const FETCH_MY_PROJECTS_QUERY = gql `
+    query{
+        getMyProjects{
+            id
+            name
+            description
+            status
+            privacy
+            createdAt
+            username
+            teammembers{
+                id
+                username
+            }
+            tasks{
+                id
+                name
+            }
+        }
+    }
+`
 
 export default Account;

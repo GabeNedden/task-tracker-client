@@ -3,7 +3,8 @@ import { Button, Container, Form, Grid, Image, Modal, Radio } from 'semantic-ui-
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
-import ToggleButton from '../components/ToggleButton';
+import ToggleButton from './ToggleButton';
+import ArchiveButton from './ArchiveButton';
 
 function ProjectModal(props) {
 
@@ -14,6 +15,8 @@ function ProjectModal(props) {
         privacy: props.project.privacy
     }
     const [values, setValues] = useState(initialState);
+
+    console.log(values)
     const onChange = (event) => {
             setValues({...values, [event.target.name]: event.target.value});
         };
@@ -75,7 +78,7 @@ function ProjectModal(props) {
                                         />
                                     <Form.Field>
                                         <Radio
-                                            label="Allow Teammembers?"
+                                            label="Allow Teammembers? "
                                             toggle
                                             name='radioGroup'
                                             value={values.privacy}
@@ -84,6 +87,7 @@ function ProjectModal(props) {
                                         />
                                     </Form.Field>
                                     <ToggleButton user={props.user} project={props.project} />
+                                    <ArchiveButton user={props.user} project={props.project} />
                                     <Button floated="left" size="mini" type="submit" color="grey">
                                         Update
                                     </Button>
