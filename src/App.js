@@ -10,6 +10,7 @@ import AuthRoute from './utilities/AuthRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import Team from './pages/Team';
 import Matrix from './pages/Matrix';
 import ProjectPage from './pages/ProjectPage';
 import Account from './pages/Account';
@@ -27,6 +28,7 @@ function App() {
             <Route exact path='/' component={Home}/>
             <AuthRoute exact path='/login' component={Login}/>
             <AuthRoute exact path='/signup' component={SignUp}/>
+            <Route exact path='/team' component={Team}/>
             <Route exact path='/matrix' component={Matrix}/>
             <Route exact path='/contact' component={Contact}/>
             <Route exact path='/project/:projectId' component={ProjectPage}/>

@@ -55,7 +55,13 @@ const DesktopContainer = (props) => {
                     as={Link}
                     to='/'
                   />
-                  <Menu.Item as='a'>Company</Menu.Item>
+                  <Menu.Item
+                    name='team'
+                    active={activeItem === 'team'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/team'
+                  />
                   <Menu.Item as='a'>Careers</Menu.Item>
                   <Menu.Item
                     name='contact'
@@ -88,7 +94,13 @@ const DesktopContainer = (props) => {
                     as={Link}
                     to='/'
                   > Home </Menu.Item>
-                  <Menu.Item as='a'>Company</Menu.Item>
+                  <Menu.Item
+                    name='team'
+                    active={activeItem === 'team'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/team'
+                  />
                   <Menu.Item as='a'>Careers</Menu.Item>
                   <Menu.Item
                     name='contact'
@@ -166,7 +178,13 @@ const DesktopContainer = (props) => {
                     as={Link}
                     to='/'
                   />
-                  <Menu.Item as='a'>Company</Menu.Item>
+                  <Menu.Item
+                    name='team'
+                    active={activeItem === 'team'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/team'
+                  />
                   <Menu.Item as='a'>Careers</Menu.Item>
                   <Menu.Item
                     name='contact'
@@ -196,7 +214,13 @@ const DesktopContainer = (props) => {
                     as={Link}
                     to='/'
                   > Home </Menu.Item>
-                  <Menu.Item as='a'>Company</Menu.Item>
+                  <Menu.Item
+                    name='team'
+                    active={activeItem === 'team'}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to='/team'
+                  />
                   <Menu.Item as='a'>Careers</Menu.Item>
                   <Menu.Item
                     name='contact'
