@@ -1,6 +1,6 @@
 # Task Tracker!
 
-Have a look at the latest version [Client hosted on Netlify](https://gtasktracker.netlify.app/).
+Have a look at the latest version [hosted on Netlify](https://gtasktracker.netlify.app/).
 The client-side queries and mutates data from my server-side/database hosted on Heroku. [Link to code on Github].
 This readme is a work in progress. Proper links and screenshots are on the way.
 
