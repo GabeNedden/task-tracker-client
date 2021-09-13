@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import 'semantic-ui-css/semantic.min.css';
+
 import './App.css';
 
 import { AuthProvider } from './context/auth';
 import AuthRoute from './utilities/AuthRoute';
+import { ThemeContext } from './context/theme';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -18,12 +19,19 @@ import ResponsiveContainer from './components/ResponsiveContainer';
 import NotFound from './components/NotFound';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Header from './components/Header/Header';
+
+
 
 function App() {
+  const [{ themeName }] = useContext(ThemeContext)
+
   return (
     <AuthProvider>
       <Router>
-        <ResponsiveContainer>
+      <div id='top' className={`${themeName} app`}>
+      <Header />
+      <ResponsiveContainer>
           <Switch>
             <Route exact path='/' component={Home}/>
             <AuthRoute exact path='/login' component={Login}/>
@@ -37,6 +45,8 @@ function App() {
           </Switch>
         </ResponsiveContainer>
         <Footer />
+      </div>
+        
     </Router>
     </AuthProvider>
   );
