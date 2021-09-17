@@ -1,3 +1,7 @@
+* {
+  margin: 0;
+}
+
 .page-title {
   display: block !important;
   text-align: center;
@@ -16,4 +20,25 @@
 
 .hidden {
   display: none;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+.wrapper {
+  box-sizing: border-box;
+  position: relative;
+  padding-bottom: 14em; /* Height of footer */
+  min-height: 100%;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: #fff;
+  background-color: #000;
 }

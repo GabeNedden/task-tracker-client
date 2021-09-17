@@ -23,6 +23,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <div className='wrapper'>
         <ResponsiveContainer>
           <Switch>
             <Route exact path='/' component={Home}/>
@@ -36,7 +37,10 @@ function App() {
             <Route exact path='*' component={NotFound} />
           </Switch>
         </ResponsiveContainer>
-        <Footer />
+        </div>
+        <div className='footer'>
+          <Footer />
+        </div>
     </Router>
     </AuthProvider>
   );

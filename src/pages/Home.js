@@ -23,6 +23,8 @@ function Home() {
                         <>
                         <h1>Home</h1>
                         <p>Sign in to get started</p>
+                        <div style={{height: 220}}>
+                        </div>
                     </> 
                     )}
             </Grid.Row>
