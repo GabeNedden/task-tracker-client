@@ -139,9 +139,7 @@ function ProjectPage(props){
                                     {teammembers.map(teammember => (
                                         <Feed.Event key={teammember.id}>
                                             <Feed.Label image={"https://react.semantic-ui.com/images/avatar/small/jenny.jpg"} />
-                                            <Feed.Content>
-                                                {teammember.username}
-                                            </Feed.Content>
+                                            <Feed.Content date={teammember.role} summary={teammember.username} />
                                         </Feed.Event>
                                     ))}
                                 </Feed>

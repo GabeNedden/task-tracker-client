@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
+import uniqid from 'uniqid';
+import Select from 'react-select';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { Button, Card, Dropdown, Feed, Form, Grid, Icon, Image, Modal } from 'semantic-ui-react';
+import { Button, Card, Feed, Grid, Header, Icon, Image, Modal } from 'semantic-ui-react';
 
 function TeamModal(props) {
 
-  const [targetUser, setTargetUser] = useState('');
   const [team, setTeam] = useState('');
   const [firstOpen, setFirstOpen] = useState(false)
   const [secondOpen, setSecondOpen] = useState(false)
@@ -13,22 +14,14 @@ function TeamModal(props) {
 
   const { loading, data: { getUsers } = {} } = useQuery(FETCH_USERS_QUERY);
 
-  const onChange = (event) => {
-    setTeam(event.target.value);
-  }
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    setTargetUser(getUsers.find(user => user.username === team || user.email === team));
-    console.log(targetUser)
-  }
+  console.log("team:", team)
 
   const [addTeammember] = useMutation(ADD_TEAMMEMBER_MUTATION, {
     update(){
     },
     variables: {
         projectId,
-        teammemberId: targetUser.id
+        teammemberId: team.id
     }
   })
 
@@ -48,7 +41,7 @@ function TeamModal(props) {
             <Grid.Column width={8}>
               <Feed>
                 {teammembers.map(teammember => (
-                    <Feed.Event key={teammember.id}>
+                    <Feed.Event key={uniqid()}>
                         <Feed.Label image={"https://react.semantic-ui.com/images/avatar/small/jenny.jpg"} />
                         <Feed.Content date={teammember.role} summary={teammember.username} />
                     </Feed.Event>
@@ -57,30 +50,18 @@ function TeamModal(props) {
             </Grid.Column>
 
             <Grid.Column width={8}>
-              <Form onSubmit={onSubmit}>
-                <Form.Field>
-                    <Dropdown 
-                      placeholder="Search Users"
-                      fluid
-                      search
-                      selection
-                      options={getUsers}
-                    />
-                    <Form.Input 
-                        loading={loading === true}
-                        size="big"
-                        placeholder="Username or Email"
-                        name="team"
-                        value={team}
-                        onChange={onChange}
-                        />
-                    <Button size="mini" type="submit" color="grey">
-                        Search
-                    </Button>
-                </Form.Field>
-              </Form>
+              <Header>Add a New Team Member</Header>
+              <Select
+                onChange={setTeam}
+                isSearchable
+                isLoading={loading}
+                getOptionLabel ={(option)=>option.username}
+                getOptionValue ={(option)=>option.username}
+                placeholder="Search for a User"
+                options={getUsers ? getUsers : {}}
+              />
 
-              {targetUser === '' ? (
+              {team === '' ? (
                 <div>
                 </div>
               ) : (
@@ -92,10 +73,10 @@ function TeamModal(props) {
                     size='mini'
                     src='https://react.semantic-ui.com/images/avatar/large/molly.png'
                   />
-                  <Card.Header>{targetUser.username}</Card.Header>
-                  <Card.Meta>{targetUser.email}</Card.Meta>
+                  <Card.Header>{team.username}</Card.Header>
+                  <Card.Meta>{team.email.slice(0, 3).concat('.........', team.email.slice(-10))}</Card.Meta>
                   <Card.Description>
-                    Would you like to invite {targetUser.username} to your project?
+                    Would you like to invite {team.username} to your project?
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
